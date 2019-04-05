@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
+  <Extern href="stdidcmd.h"/>
+
+  <!--This header contains the command ids for the menus provided by the shell. -->
+  <Extern href="vsshlids.h"/>
+
+  <Commands package="guidP4ToolsPackage">
+    <Menus>
+      <!-- Menu -->
+      <Menu guid="GuidUEToolsMenu" id="TopLevelMenu" priority="0x700" type="Menu">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_TOOLSADDINS"/>
+        <Strings>
+          <ButtonText>UE Tools</ButtonText>
+          <CommandName>UE Tools</CommandName>
+        </Strings>
+      </Menu>
+      <!-- Toolbar -->
+      <Menu guid="GuidUEToolsMenu" id="Toolbar" type="Toolbar">
+        <CommandFlag>DefaultDocked</CommandFlag>
+        <Strings>
+          <ButtonText>UE Tools</ButtonText>
+          <CommandName>UE Tools</CommandName>
+        </Strings>
+      </Menu>
+    </Menus>
+
+    <Groups>
+      <!-- Menu -->
+      <Group guid="GuidUEToolsMenu" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="GuidUEToolsMenu" id="TopLevelMenu"/>
+      </Group>
+      <!-- Toolbar -->
+      <Group guid="GuidUEToolsMenu" id="ToolbarGroup" priority="0x0000">
+        <Parent guid="GuidUEToolsMenu" id="Toolbar"/>
+      </Group>
+      <!-- Document Tab Context Menu -->
+      <Group guid="GuidUEToolsMenu" id="DocumentTabContextMenu" priority="0x0300">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_EZDOCWINTAB"/>
+      </Group>
+      <!-- Solution Item Context Menu -->
+      <Group guid="GuidUEToolsMenu" id="SolutionItemContextMenu" priority="0x0300">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <!-- Menu -->
+      <Button guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="MyMenuGroup" />
+        <Icon guid="guidImages" id="ImageP4Edit" />
+        <Strings>
+          <ButtonText>P4 Edit</ButtonText>
+          <CommandName>P4Edit</CommandName>
+          <ToolTipText>P4 Edit the current document</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0101" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="MyMenuGroup" />
+        <Icon guid="guidImages" id="ImageP4Revert" />
+        <Strings>
+          <ButtonText>P4 Revert</ButtonText>
+          <CommandName>P4Revert</CommandName>
+          <ToolTipText>P4 Revert the current document</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0102" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="MyMenuGroup" />
+        <Icon guid="guidImages" id="ImageP4Diff" />
+        <Strings>
+          <ButtonText>P4 Diff</ButtonText>
+          <CommandName>P4Diff</CommandName>
+          <ToolTipText>P4 Diff the current document against have revision</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="P4HistoryId" priority="0x0103" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="MyMenuGroup" />
+        <Icon guid="guidImages" id="ImageP4History" />
+        <Strings>
+          <ButtonText>P4 History</ButtonText>
+          <CommandName>P4History</CommandName>
+          <ToolTipText>P4 Show history of the current document</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="P4TimelapseId" priority="0x0104" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="MyMenuGroup" />
+        <Icon guid="guidImages" id="ImageP4Timelapse" />
+        <Strings>
+          <ButtonText>P4 Timelapse</ButtonText>
+          <CommandName>P4Timelapse</CommandName>
+          <ToolTipText>P4 Show timelapse of the current document</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="P4RevisionGraphId" priority="0x0104" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="MyMenuGroup" />
+        <Icon guid="guidImages" id="ImageP4RevisionGraph" />
+        <Strings>
+          <ButtonText>P4 Revision Graph</ButtonText>
+          <CommandName>P4RevisionGraph</CommandName>
+          <ToolTipText>P4 Show revision graph of the current document</ToolTipText>
+        </Strings>
+      </Button>
+
+      <!-- Toolbar -->
+      <Button guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
+        <Icon guid="guidImages" id="ImageP4Edit" />
+        <Strings>
+          <ButtonText>P4 edit current document</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0101" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
+        <Icon guid="guidImages" id="ImageP4Revert" />
+        <Strings>
+          <ButtonText>P4 revert current document</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0102" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
+        <Icon guid="guidImages" id="ImageP4Diff" />
+        <Strings>
+          <ButtonText>P4 diff against have revision</ButtonText>
+        </Strings>
+      </Button>
+
+      <!-- Document Tab Context Menu -->
+      <Button guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu" />
+        <Icon guid="guidImages" id="ImageP4Edit" />
+        <Strings>
+          <ButtonText>P4 Edit</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0101" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu"/>
+        <Icon guid="guidImages" id="ImageP4Revert" />
+        <Strings>
+          <ButtonText>P4 Revert</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0102" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu"/>
+        <Icon guid="guidImages" id="ImageP4Diff" />
+        <Strings>
+          <ButtonText>P4 Diff</ButtonText>
+        </Strings>
+      </Button>
+
+      <!-- Solution Item Context Menu -->
+      <Button guid="GuidUEToolsMenu" id="P4EditMultiId" priority="0x0100" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu" />
+        <Icon guid="guidImages" id="ImageP4Edit" />
+        <Strings>
+          <ButtonText>P4 Edit</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="P4RevertMultiId" priority="0x0101" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu"/>
+        <Icon guid="guidImages" id="ImageP4Revert" />
+        <Strings>
+          <ButtonText>P4 Revert</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="P4DiffMultiId" priority="0x0102" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu"/>
+        <Icon guid="guidImages" id="ImageP4Diff" />
+        <Strings>
+          <ButtonText>P4 Diff</ButtonText>
+        </Strings>
+      </Button>
+
+    </Buttons>
+
+    <Bitmaps>
+      <Bitmap guid="guidImages" href="Perforce\Resources\P4Images.png" usedList="ImageP4Edit, ImageP4Revert, ImageP4History, ImageP4Timelapse, ImageP4Diff, ImageP4RevisionGraph"/>
+    </Bitmaps>
+  </Commands>
+
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidP4ToolsPackage" value="{ea3555c8-f833-4d36-8830-4150fca6abf3}" />
+
+    <!-- This is the guid used to group the menu commands together -->
+    <GuidSymbol name="GuidUEToolsMenu" value="{a4eb01f6-f054-4d41-9571-e6e38166d654}">
+      <IDSymbol name="TopLevelMenu" value="0x1021" />
+      <IDSymbol name="MyMenuGroup" value="0x1020" />
+
+      <IDSymbol name="Toolbar" value="0x1030"/>
+      <IDSymbol name="ToolbarGroup" value="0x1031"/>
+
+      <IDSymbol name="DocumentTabContextMenu" value="0x1040"/>
+      <IDSymbol name="SolutionItemContextMenu" value="0x1050"/>
+
+      <IDSymbol name="P4EditId" value="0x0100" />
+      <IDSymbol name="P4RevertId" value="0x0101" />
+      <IDSymbol name="P4HistoryId" value="0x0102" />
+      <IDSymbol name="P4TimelapseId" value="0x0103" />
+      <IDSymbol name="P4DiffId" value="0x0104" />
+      <IDSymbol name="P4RevisionGraphId" value="0x0105" />
+
+      <IDSymbol name="P4EditMultiId" value="0x0150" />
+      <IDSymbol name="P4RevertMultiId" value="0x0151" />
+      <IDSymbol name="P4DiffMultiId" value="0x0152" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidImages" value="{0df9b6b4-92aa-4353-95f2-fd7084129f70}" >
+      <IDSymbol name="ImageP4Edit" value="1" />
+      <IDSymbol name="ImageP4Revert" value="2" />
+      <IDSymbol name="ImageP4History" value="3" />
+      <IDSymbol name="ImageP4Timelapse" value="4" />
+      <IDSymbol name="ImageP4Diff" value="5" />
+      <IDSymbol name="ImageP4RevisionGraph" value="6" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
