@@ -8,29 +8,41 @@
   <Extern href="vsshlids.h"/>
 
   <Commands package="guidP4ToolsPackage">
+    <!-- Parent of a group is a menu, context menu or toolbar -->
+    <!-- Parent of a submenu is always a group -->
+
     <Menus>
-      <!-- Menu -->
-      <Menu guid="GuidUEToolsMenu" id="TopLevelMenu" priority="0x700" type="Menu">
+      <!-- Main Menu -->
+      <Menu guid="GuidUEToolsMenu" id="MainMenu" priority="0x700" type="Menu">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_TOOLSADDINS"/>
         <Strings>
           <ButtonText>UE Tools</ButtonText>
-          <CommandName>UE Tools</CommandName>
+        </Strings>
+      </Menu>
+      <!-- Diff Against SubMenu -->
+      <Menu guid="GuidUEToolsMenu" id="DiffAgainstSubMenu" priority="0x0070" type="Menu">
+        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup"/>
+        <Strings>
+          <ButtonText>P4 Diff Against</ButtonText>
         </Strings>
       </Menu>
       <!-- Toolbar -->
       <Menu guid="GuidUEToolsMenu" id="Toolbar" type="Toolbar">
         <CommandFlag>DefaultDocked</CommandFlag>
         <Strings>
-          <ButtonText>UE Tools</ButtonText>
-          <CommandName>UE Tools</CommandName>
+          <ButtonText>UE Toolbar</ButtonText>
         </Strings>
       </Menu>
     </Menus>
 
     <Groups>
-      <!-- Menu -->
-      <Group guid="GuidUEToolsMenu" id="MyMenuGroup" priority="0x0600">
-        <Parent guid="GuidUEToolsMenu" id="TopLevelMenu"/>
+      <!-- Main Menu -->
+      <Group guid="GuidUEToolsMenu" id="MainMenuGroup" priority="0x0600">
+        <Parent guid="GuidUEToolsMenu" id="MainMenu"/>
+      </Group>
+      <!-- Diff Against SubMenu -->
+      <Group guid="GuidUEToolsMenu" id="DiffAgainstSubMenuGroup" priority="0x0601">
+        <Parent guid="GuidUEToolsMenu" id="DiffAgainstSubMenu"/>
       </Group>
       <!-- Toolbar -->
       <Group guid="GuidUEToolsMenu" id="ToolbarGroup" priority="0x0000">
@@ -46,10 +58,11 @@
       </Group>
     </Groups>
 
+    <!-- Buttons -->
     <Buttons>
       <!-- Menu -->
-      <Button guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="MyMenuGroup" />
+      <Button guid="GuidUEToolsMenu" id="P4EditId" priority="0x0010" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
         <Icon guid="guidImages" id="ImageP4Edit" />
         <Strings>
           <ButtonText>P4 Edit</ButtonText>
@@ -57,8 +70,8 @@
           <ToolTipText>P4 Edit the current document</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0101" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="MyMenuGroup" />
+      <Button guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0020" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
         <Icon guid="guidImages" id="ImageP4Revert" />
         <Strings>
           <ButtonText>P4 Revert</ButtonText>
@@ -66,8 +79,8 @@
           <ToolTipText>P4 Revert the current document</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0102" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="MyMenuGroup" />
+      <Button guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0030" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
         <Icon guid="guidImages" id="ImageP4Diff" />
         <Strings>
           <ButtonText>P4 Diff</ButtonText>
@@ -75,8 +88,8 @@
           <ToolTipText>P4 Diff the current document against have revision</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="GuidUEToolsMenu" id="P4HistoryId" priority="0x0103" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="MyMenuGroup" />
+      <Button guid="GuidUEToolsMenu" id="P4HistoryId" priority="0x0040" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
         <Icon guid="guidImages" id="ImageP4History" />
         <Strings>
           <ButtonText>P4 History</ButtonText>
@@ -84,8 +97,8 @@
           <ToolTipText>P4 Show history of the current document</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="GuidUEToolsMenu" id="P4TimelapseId" priority="0x0104" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="MyMenuGroup" />
+      <Button guid="GuidUEToolsMenu" id="P4TimelapseId" priority="0x0050" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
         <Icon guid="guidImages" id="ImageP4Timelapse" />
         <Strings>
           <ButtonText>P4 Timelapse</ButtonText>
@@ -93,13 +106,23 @@
           <ToolTipText>P4 Show timelapse of the current document</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="GuidUEToolsMenu" id="P4RevisionGraphId" priority="0x0104" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="MyMenuGroup" />
+      <Button guid="GuidUEToolsMenu" id="P4RevisionGraphId" priority="0x0060" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
         <Icon guid="guidImages" id="ImageP4RevisionGraph" />
         <Strings>
           <ButtonText>P4 Revision Graph</ButtonText>
           <CommandName>P4RevisionGraph</CommandName>
           <ToolTipText>P4 Show revision graph of the current document</ToolTipText>
+        </Strings>
+      </Button>
+
+      <!-- DiffAgainstSubMenu -->
+      <Button guid="GuidUEToolsMenu" id="P4DiffAgainstId" priority="0x0070" type="Button">
+        <Parent guid="GuidUEToolsMenu" id="DiffAgainstSubMenuGroup"/>
+        <CommandFlag>DynamicItemStart</CommandFlag>
+        <Strings>
+          <CommandName>DynamicItemStart</CommandName>
+          <CommandName>TextChanges</CommandName>
         </Strings>
       </Button>
 
@@ -181,12 +204,13 @@
 
   <Symbols>
     <!-- This is the package guid. -->
-    <GuidSymbol name="guidP4ToolsPackage" value="{ea3555c8-f833-4d36-8830-4150fca6abf3}" />
+    <GuidSymbol name="guidP4ToolsPackage" value="{fd6e66a6-d800-4ab4-881d-369473eea1cb}" />
 
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="GuidUEToolsMenu" value="{a4eb01f6-f054-4d41-9571-e6e38166d654}">
-      <IDSymbol name="TopLevelMenu" value="0x1021" />
-      <IDSymbol name="MyMenuGroup" value="0x1020" />
+      <IDSymbol name="MainMenu" value="0x1020" />
+      <IDSymbol name="MainMenuGroup" value="0x1021" />
+      <IDSymbol name="DiffAgainstSubMenuGroup" value="0x1022" />
 
       <IDSymbol name="Toolbar" value="0x1030"/>
       <IDSymbol name="ToolbarGroup" value="0x1031"/>
@@ -200,6 +224,9 @@
       <IDSymbol name="P4TimelapseId" value="0x0103" />
       <IDSymbol name="P4DiffId" value="0x0104" />
       <IDSymbol name="P4RevisionGraphId" value="0x0105" />
+
+      <IDSymbol name="DiffAgainstSubMenu" value="0x0200"/>
+      <IDSymbol name="P4DiffAgainstId" value="0x0201"/> <!-- Will expand into a much larger range -->
 
       <IDSymbol name="P4EditMultiId" value="0x0150" />
       <IDSymbol name="P4RevertMultiId" value="0x0151" />
