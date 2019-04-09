@@ -20,7 +20,7 @@
         </Strings>
       </Menu>
       <!-- Diff Against SubMenu -->
-      <Menu guid="GuidUEToolsMenu" id="DiffAgainstSubMenu" priority="0x0070" type="Menu">
+      <Menu guid="GuidUEToolsMenu" id="DiffAgainstSubMenu" priority="0x0170" type="Menu">
         <Parent guid="GuidUEToolsMenu" id="MainMenuGroup"/>
         <Strings>
           <ButtonText>P4 Diff Against</ButtonText>
@@ -61,8 +61,7 @@
     <!-- Buttons -->
     <Buttons>
       <!-- Menu -->
-      <Button guid="GuidUEToolsMenu" id="P4EditId" priority="0x0010" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+      <Button guid="GuidUEToolsMenu" id="P4EditId" type="Button">
         <Icon guid="guidImages" id="ImageP4Edit" />
         <Strings>
           <ButtonText>P4 Edit</ButtonText>
@@ -70,8 +69,7 @@
           <ToolTipText>P4 Edit the current document</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0020" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+      <Button guid="GuidUEToolsMenu" id="P4RevertId" type="Button">
         <Icon guid="guidImages" id="ImageP4Revert" />
         <Strings>
           <ButtonText>P4 Revert</ButtonText>
@@ -79,8 +77,7 @@
           <ToolTipText>P4 Revert the current document</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0030" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+      <Button guid="GuidUEToolsMenu" id="P4DiffId" type="Button">
         <Icon guid="guidImages" id="ImageP4Diff" />
         <Strings>
           <ButtonText>P4 Diff</ButtonText>
@@ -88,8 +85,7 @@
           <ToolTipText>P4 Diff the current document against have revision</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="GuidUEToolsMenu" id="P4HistoryId" priority="0x0040" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+      <Button guid="GuidUEToolsMenu" id="P4HistoryId" type="Button">
         <Icon guid="guidImages" id="ImageP4History" />
         <Strings>
           <ButtonText>P4 History</ButtonText>
@@ -97,8 +93,7 @@
           <ToolTipText>P4 Show history of the current document</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="GuidUEToolsMenu" id="P4TimelapseId" priority="0x0050" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+      <Button guid="GuidUEToolsMenu" id="P4TimelapseId" type="Button">
         <Icon guid="guidImages" id="ImageP4Timelapse" />
         <Strings>
           <ButtonText>P4 Timelapse</ButtonText>
@@ -106,8 +101,7 @@
           <ToolTipText>P4 Show timelapse of the current document</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="GuidUEToolsMenu" id="P4RevisionGraphId" priority="0x0060" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+      <Button guid="GuidUEToolsMenu" id="P4RevisionGraphId" type="Button">
         <Icon guid="guidImages" id="ImageP4RevisionGraph" />
         <Strings>
           <ButtonText>P4 Revision Graph</ButtonText>
@@ -117,84 +111,13 @@
       </Button>
 
       <!-- DiffAgainstSubMenu -->
-      <Button guid="GuidUEToolsMenu" id="P4DiffAgainstId" priority="0x0070" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="DiffAgainstSubMenuGroup"/>
+      <Button guid="GuidUEToolsMenu" id="P4DiffAgainstId" type="Button">
         <CommandFlag>DynamicItemStart</CommandFlag>
         <Strings>
           <CommandName>DynamicItemStart</CommandName>
           <CommandName>TextChanges</CommandName>
         </Strings>
       </Button>
-
-      <!-- Toolbar -->
-      <Button guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
-        <Icon guid="guidImages" id="ImageP4Edit" />
-        <Strings>
-          <ButtonText>P4 edit current document</ButtonText>
-        </Strings>
-      </Button>
-      <Button guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0101" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
-        <Icon guid="guidImages" id="ImageP4Revert" />
-        <Strings>
-          <ButtonText>P4 revert current document</ButtonText>
-        </Strings>
-      </Button>
-      <Button guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0102" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
-        <Icon guid="guidImages" id="ImageP4Diff" />
-        <Strings>
-          <ButtonText>P4 diff against have revision</ButtonText>
-        </Strings>
-      </Button>
-
-      <!-- Document Tab Context Menu -->
-      <Button guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu" />
-        <Icon guid="guidImages" id="ImageP4Edit" />
-        <Strings>
-          <ButtonText>P4 Edit</ButtonText>
-        </Strings>
-      </Button>
-      <Button guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0101" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu"/>
-        <Icon guid="guidImages" id="ImageP4Revert" />
-        <Strings>
-          <ButtonText>P4 Revert</ButtonText>
-        </Strings>
-      </Button>
-      <Button guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0102" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu"/>
-        <Icon guid="guidImages" id="ImageP4Diff" />
-        <Strings>
-          <ButtonText>P4 Diff</ButtonText>
-        </Strings>
-      </Button>
-
-      <!-- Solution Item Context Menu -->
-      <Button guid="GuidUEToolsMenu" id="P4EditMultiId" priority="0x0100" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu" />
-        <Icon guid="guidImages" id="ImageP4Edit" />
-        <Strings>
-          <ButtonText>P4 Edit</ButtonText>
-        </Strings>
-      </Button>
-      <Button guid="GuidUEToolsMenu" id="P4RevertMultiId" priority="0x0101" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu"/>
-        <Icon guid="guidImages" id="ImageP4Revert" />
-        <Strings>
-          <ButtonText>P4 Revert</ButtonText>
-        </Strings>
-      </Button>
-      <Button guid="GuidUEToolsMenu" id="P4DiffMultiId" priority="0x0102" type="Button">
-        <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu"/>
-        <Icon guid="guidImages" id="ImageP4Diff" />
-        <Strings>
-          <ButtonText>P4 Diff</ButtonText>
-        </Strings>
-      </Button>
-
     </Buttons>
 
     <Bitmaps>
@@ -202,6 +125,93 @@
     </Bitmaps>
   </Commands>
 
+  <CommandPlacements>
+    <!-- Main Menu -->
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" >
+      <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0110">
+      <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0120">
+      <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4HistoryId" priority="0x0130">
+      <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4TimelapseId" priority="0x0140">
+      <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4RevisionGraphId" priority="0x0150">
+      <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+    </CommandPlacement>
+
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4DiffAgainstId" priority="0x0100">
+      <Parent guid="GuidUEToolsMenu" id="DiffAgainstSubMenuGroup" />
+    </CommandPlacement>
+
+    <!-- Document Tab Context Menu -->
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" >
+      <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0110">
+      <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0120">
+      <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4HistoryId" priority="0x0130">
+      <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4TimelapseId" priority="0x0140">
+      <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4RevisionGraphId" priority="0x0150">
+      <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu" />
+    </CommandPlacement>
+
+    <!-- Solution Item Context Menu -->
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" >
+      <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0110">
+      <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0120">
+      <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4HistoryId" priority="0x0130">
+      <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4TimelapseId" priority="0x0140">
+      <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4RevisionGraphId" priority="0x0150">
+      <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu" />
+    </CommandPlacement>
+
+    <!-- Toolbar -->
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" >
+      <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0110">
+      <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0120">
+      <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4HistoryId" priority="0x0130">
+      <Parent guid="GuidUEToolsMenu" id="ToolbarGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4TimelapseId" priority="0x0140">
+      <Parent guid="GuidUEToolsMenu" id="ToolbarGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4RevisionGraphId" priority="0x0150">
+      <Parent guid="GuidUEToolsMenu" id="ToolbarGroup" />
+    </CommandPlacement>
+
+  </CommandPlacements>
+  
   <Symbols>
     <!-- This is the package guid. -->
     <GuidSymbol name="guidP4ToolsPackage" value="{fd6e66a6-d800-4ab4-881d-369473eea1cb}" />
