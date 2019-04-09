@@ -41,7 +41,7 @@ namespace UETools
     [ProvideAutoLoad(UIContextGuids.NoSolution)]
     public sealed class UEToolsPackage : AsyncPackage
     {
-        public const string PackageGuidString = "fd6e66a6-d800-4ab4-881d-369473eea1cb";
+        public const string PackageGuidString = "44838C29-D7C6-415E-A60D-E48E7D9102F4";
 
         public UEToolsPackage()
         {
@@ -59,7 +59,7 @@ namespace UETools
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
-            var commandSetGuid = new Guid("a4eb01f6-f054-4d41-9571-e6e38166d654");
+            var commandSetGuid = new Guid("9002F6D2-F954-4B61-A6E7-273609026867");
             await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0100, (o, e) => Helper.P4Helper.ExecuteP4Command("edit {0}", Helper.VSHelper.GetOpenDocumentName()));
             await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0101, (o, e) => Helper.P4Helper.ExecuteP4Command("revert {0}", Helper.VSHelper.GetOpenDocumentName()));
             await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0102, (o, e) => Helper.P4Helper.ExecuteP4VCommand("history {0}", Helper.VSHelper.GetOpenDocumentName()));

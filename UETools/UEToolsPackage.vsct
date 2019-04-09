@@ -266,10 +266,10 @@
   
   <Symbols>
     <!-- This is the package guid. -->
-    <GuidSymbol name="guidP4ToolsPackage" value="{fd6e66a6-d800-4ab4-881d-369473eea1cb}" />
+    <GuidSymbol name="guidP4ToolsPackage" value="{44838C29-D7C6-415E-A60D-E48E7D9102F4}" />
 
     <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="GuidUEToolsMenu" value="{a4eb01f6-f054-4d41-9571-e6e38166d654}">
+    <GuidSymbol name="GuidUEToolsMenu" value="{9002F6D2-F954-4B61-A6E7-273609026867}">
       <IDSymbol name="MainMenu" value="0x1020" />
       <IDSymbol name="P4CommonGroup" value="0x1021" />
       <IDSymbol name="P4ExtraGroup" value="0x1022" />
