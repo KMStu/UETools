@@ -66,6 +66,8 @@ namespace UETools
             await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0103, (o, e) => Helper.P4Helper.ExecuteP4VCommand("timelapse {0}", Helper.VSHelper.GetOpenDocumentName()));
             await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0104, (o, e) => Helper.P4Helper.ExecuteP4VCommand("prevdiff {0}", Helper.VSHelper.GetOpenDocumentName()));
             await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0105, (o, e) => Helper.P4Helper.ExecuteP4VCCommand("revisiongraph {0}", Helper.VSHelper.GetOpenDocumentName()));
+            await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0106, (o, e) => Helper.P4Helper.CopyP4PathToClipboard(Helper.VSHelper.GetOpenDocumentName()));
+            await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0107, (o, e) => Helper.P4Helper.OpenP4VAt(Helper.VSHelper.GetOpenDocumentName()));
 
             await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0150, (o, e) => Helper.VSHelper.ForEachSelectedFile(filename => Helper.P4Helper.ExecuteP4Command("edit {0}", filename)));
             await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0151, (o, e) => Helper.VSHelper.ForEachSelectedFile(filename => Helper.P4Helper.ExecuteP4Command("revert {0}", filename)));

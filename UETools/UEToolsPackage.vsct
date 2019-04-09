@@ -20,8 +20,8 @@
         </Strings>
       </Menu>
       <!-- Diff Against SubMenu -->
-      <Menu guid="GuidUEToolsMenu" id="DiffAgainstSubMenu" priority="0x0170" type="Menu">
-        <Parent guid="GuidUEToolsMenu" id="MainMenuGroup"/>
+      <Menu guid="GuidUEToolsMenu" id="P4DiffAgainstSubMenu" priority="0x0170" type="Menu">
+        <Parent guid="GuidUEToolsMenu" id="P4ExtraGroup"/>
         <Strings>
           <ButtonText>P4 Diff Against</ButtonText>
         </Strings>
@@ -37,12 +37,19 @@
 
     <Groups>
       <!-- Main Menu -->
-      <Group guid="GuidUEToolsMenu" id="MainMenuGroup" priority="0x0600">
+      <Group guid="GuidUEToolsMenu" id="P4CommonGroup" priority="0x0600">
+        <Parent guid="GuidUEToolsMenu" id="MainMenu"/>
+      </Group>
+      <Group guid="GuidUEToolsMenu" id="P4ExtraGroup" priority="0x0600">
         <Parent guid="GuidUEToolsMenu" id="MainMenu"/>
       </Group>
       <!-- Diff Against SubMenu -->
-      <Group guid="GuidUEToolsMenu" id="DiffAgainstSubMenuGroup" priority="0x0601">
-        <Parent guid="GuidUEToolsMenu" id="DiffAgainstSubMenu"/>
+      <Group guid="GuidUEToolsMenu" id="P4DiffAgainstGroup" priority="0x0601">
+        <Parent guid="GuidUEToolsMenu" id="P4DiffAgainstSubMenu"/>
+      </Group>
+      <!-- Unreal Tools Group -->
+      <Group guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" priority="0x0602">
+        <Parent guid="GuidUEToolsMenu" id="MainMenu" />
       </Group>
       <!-- Toolbar -->
       <Group guid="GuidUEToolsMenu" id="ToolbarGroup" priority="0x0000">
@@ -58,14 +65,12 @@
       </Group>
     </Groups>
 
-    <!-- Buttons -->
     <Buttons>
-      <!-- Menu -->
+      <!-- P4 Buttons -->
       <Button guid="GuidUEToolsMenu" id="P4EditId" type="Button">
         <Icon guid="guidImages" id="ImageP4Edit" />
         <Strings>
           <ButtonText>P4 Edit</ButtonText>
-          <CommandName>P4Edit</CommandName>
           <ToolTipText>P4 Edit the current document</ToolTipText>
         </Strings>
       </Button>
@@ -73,7 +78,6 @@
         <Icon guid="guidImages" id="ImageP4Revert" />
         <Strings>
           <ButtonText>P4 Revert</ButtonText>
-          <CommandName>P4Revert</CommandName>
           <ToolTipText>P4 Revert the current document</ToolTipText>
         </Strings>
       </Button>
@@ -81,7 +85,6 @@
         <Icon guid="guidImages" id="ImageP4Diff" />
         <Strings>
           <ButtonText>P4 Diff</ButtonText>
-          <CommandName>P4Diff</CommandName>
           <ToolTipText>P4 Diff the current document against have revision</ToolTipText>
         </Strings>
       </Button>
@@ -89,7 +92,6 @@
         <Icon guid="guidImages" id="ImageP4History" />
         <Strings>
           <ButtonText>P4 History</ButtonText>
-          <CommandName>P4History</CommandName>
           <ToolTipText>P4 Show history of the current document</ToolTipText>
         </Strings>
       </Button>
@@ -97,7 +99,6 @@
         <Icon guid="guidImages" id="ImageP4Timelapse" />
         <Strings>
           <ButtonText>P4 Timelapse</ButtonText>
-          <CommandName>P4Timelapse</CommandName>
           <ToolTipText>P4 Show timelapse of the current document</ToolTipText>
         </Strings>
       </Button>
@@ -105,17 +106,48 @@
         <Icon guid="guidImages" id="ImageP4RevisionGraph" />
         <Strings>
           <ButtonText>P4 Revision Graph</ButtonText>
-          <CommandName>P4RevisionGraph</CommandName>
           <ToolTipText>P4 Show revision graph of the current document</ToolTipText>
         </Strings>
       </Button>
+      <Button guid="GuidUEToolsMenu" id="P4CopyP4PathId" type="Button">
+        <Strings>
+          <ButtonText>P4 Copy Path</ButtonText>
+          <ToolTipText>Copies the P4 path of the current document</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="P4OpenP4AtId" type="Button">
+        <Strings>
+          <ButtonText>P4 Open P4V At</ButtonText>
+          <ToolTipText>Opens P4V at the location of the current document</ToolTipText>
+        </Strings>
+      </Button>
 
-      <!-- DiffAgainstSubMenu -->
+      <!-- P4 Diff Against Buttons -->
       <Button guid="GuidUEToolsMenu" id="P4DiffAgainstId" type="Button">
         <CommandFlag>DynamicItemStart</CommandFlag>
         <Strings>
           <CommandName>DynamicItemStart</CommandName>
           <CommandName>TextChanges</CommandName>
+        </Strings>
+      </Button>
+
+      <!-- Unreal Buttons -->
+      <Button guid="GuidUEToolsMenu" id="UEUseDDCId" type="Button">
+        <Strings>
+          <ButtonText>Use DDC</ButtonText>
+          <ToolTipText>Sets which DDC to use from a preset list</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="UECleanDDCId" type="Button">
+        <Strings>
+          <ButtonText>Clean DDC</ButtonText>
+          <ToolTipText>Deletes your local DDC</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="UEUseIncredibuildId" type="Button">
+        <Strings>
+          <ButtonText>Use Incredibuild</ButtonText>
+          <ToolTipText>Enable or Disable Incredibuild</ToolTipText>
         </Strings>
       </Button>
     </Buttons>
@@ -128,27 +160,45 @@
   <CommandPlacements>
     <!-- Main Menu -->
     <CommandPlacement guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" >
-      <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+      <Parent guid="GuidUEToolsMenu" id="P4CommonGroup" />
     </CommandPlacement>
     <CommandPlacement guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0110">
-      <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+      <Parent guid="GuidUEToolsMenu" id="P4CommonGroup" />
     </CommandPlacement>
     <CommandPlacement guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0120">
-      <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+      <Parent guid="GuidUEToolsMenu" id="P4CommonGroup" />
     </CommandPlacement>
     <CommandPlacement guid="GuidUEToolsMenu" id="P4HistoryId" priority="0x0130">
-      <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+      <Parent guid="GuidUEToolsMenu" id="P4CommonGroup" />
     </CommandPlacement>
     <CommandPlacement guid="GuidUEToolsMenu" id="P4TimelapseId" priority="0x0140">
-      <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+      <Parent guid="GuidUEToolsMenu" id="P4CommonGroup" />
     </CommandPlacement>
     <CommandPlacement guid="GuidUEToolsMenu" id="P4RevisionGraphId" priority="0x0150">
-      <Parent guid="GuidUEToolsMenu" id="MainMenuGroup" />
+      <Parent guid="GuidUEToolsMenu" id="P4CommonGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4CopyP4PathId" priority="0x0160">
+      <Parent guid="GuidUEToolsMenu" id="P4ExtraGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4OpenP4AtId" priority="0x0170">
+      <Parent guid="GuidUEToolsMenu" id="P4ExtraGroup" />
     </CommandPlacement>
 
     <CommandPlacement guid="GuidUEToolsMenu" id="P4DiffAgainstId" priority="0x0100">
-      <Parent guid="GuidUEToolsMenu" id="DiffAgainstSubMenuGroup" />
+      <Parent guid="GuidUEToolsMenu" id="P4DiffAgainstGroup" />
     </CommandPlacement>
+
+    <!--
+    <CommandPlacement guid="GuidUEToolsMenu" id="UEUseDDCId" priority="0x0100">
+      <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="UECleanDDCId" priority="0x0110">
+      <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="UEUseIncredibuildId" priority="0x0120">
+      <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" />
+    </CommandPlacement>
+    -->
 
     <!-- Document Tab Context Menu -->
     <CommandPlacement guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" >
@@ -171,6 +221,7 @@
     </CommandPlacement>
 
     <!-- Solution Item Context Menu -->
+    <!--
     <CommandPlacement guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" >
       <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu" />
     </CommandPlacement>
@@ -189,6 +240,7 @@
     <CommandPlacement guid="GuidUEToolsMenu" id="P4RevisionGraphId" priority="0x0150">
       <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu" />
     </CommandPlacement>
+    -->
 
     <!-- Toolbar -->
     <CommandPlacement guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" >
@@ -219,12 +271,13 @@
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="GuidUEToolsMenu" value="{a4eb01f6-f054-4d41-9571-e6e38166d654}">
       <IDSymbol name="MainMenu" value="0x1020" />
-      <IDSymbol name="MainMenuGroup" value="0x1021" />
-      <IDSymbol name="DiffAgainstSubMenuGroup" value="0x1022" />
+      <IDSymbol name="P4CommonGroup" value="0x1021" />
+      <IDSymbol name="P4ExtraGroup" value="0x1022" />
+      <IDSymbol name="P4DiffAgainstGroup" value="0x102#" />
 
       <IDSymbol name="Toolbar" value="0x1030"/>
       <IDSymbol name="ToolbarGroup" value="0x1031"/>
-
+      
       <IDSymbol name="DocumentTabContextMenu" value="0x1040"/>
       <IDSymbol name="SolutionItemContextMenu" value="0x1050"/>
 
@@ -234,13 +287,20 @@
       <IDSymbol name="P4TimelapseId" value="0x0103" />
       <IDSymbol name="P4DiffId" value="0x0104" />
       <IDSymbol name="P4RevisionGraphId" value="0x0105" />
+      <IDSymbol name="P4CopyP4PathId" value="0x0106" />
+      <IDSymbol name="P4OpenP4AtId" value="0x0107" />
 
-      <IDSymbol name="DiffAgainstSubMenu" value="0x0200"/>
-      <IDSymbol name="P4DiffAgainstId" value="0x0201"/> <!-- Will expand into a much larger range -->
-
-      <IDSymbol name="P4EditMultiId" value="0x0150" />
+      <IDSymbol name="P4EditMultiId" value="0x0150" />    <!-- TODO Need to fix this! -->
       <IDSymbol name="P4RevertMultiId" value="0x0151" />
       <IDSymbol name="P4DiffMultiId" value="0x0152" />
+      
+      <IDSymbol name="P4DiffAgainstSubMenu" value="0x0200"/>
+      <IDSymbol name="P4DiffAgainstId" value="0x0201"/> <!-- Will expand into a much larger range -->
+
+      <IDSymbol name="UnrealToolsMenuGroup" value="0x1060"/>
+      <IDSymbol name="UEUseDDCId" value="0x0300" />
+      <IDSymbol name="UECleanDDCId" value="0x0310" />
+      <IDSymbol name="UEUseIncredibuildId" value="0x0320" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{0df9b6b4-92aa-4353-95f2-fd7084129f70}" >

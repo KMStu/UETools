@@ -96,6 +96,72 @@ namespace UETools.Helper
 
             return null;
         }
+   
+        public static void CopyP4PathToClipboard(string documentPath)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            string output;
+            try
+            {
+                if (string.IsNullOrEmpty(documentPath))
+                {
+                    output = "Nothing to do, no open document";
+                }
+                else
+                {
+                    P4FileStat fileStat = GetFileStat(documentPath);
+                    if ( fileStat != null )
+                    {
+                        System.Windows.Forms.Clipboard.SetText(fileStat.DepotFile);
+                        output = string.Format("Copied '{0}' to clipboard", fileStat.DepotFile);
+                    }
+                    else
+                    {
+                        output = string.Format("Failed to get FileStat for '{0}'", documentPath);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                output = exception.Message;
+            }
+            Helper.VSHelper.OutputString("Result: " + output + Environment.NewLine);
+        }
+
+        public static void OpenP4VAt(string documentPath)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            string output;
+            try
+            {
+                if (string.IsNullOrEmpty(documentPath))
+                {
+                    output = "Nothing to do, no open document";
+                }
+                else
+                {
+                    P4Settings settings = GetSettings(documentPath);
+                    P4FileStat fileStat = GetFileStat(documentPath);
+                    if (settings != null && fileStat != null)
+                    {
+                        string arguments = string.Format("-p {0} -c {1} -u {2} -s {3}", settings.Port, settings.Client, settings.User, fileStat.DepotFile);
+                        Helper.VSHelper.OutputString("ExecuteCommand: p4v " + arguments + Environment.NewLine);
+                        Helper.ProcessHelper.RunProcess("p4v", arguments, Path.GetDirectoryName(documentPath), out output);
+                    }
+                    else
+                    {
+                        output = string.Format("Failed to get FileStat / P4Settings for '{0}'", documentPath);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                output = exception.Message;
+            }
+            Helper.VSHelper.OutputString("Result: " + output + Environment.NewLine);
+        }
 
         public static void ExecuteP4Command(string format, string documentPath)
         {
@@ -104,7 +170,7 @@ namespace UETools.Helper
             string output;
             try
             {
-                if (documentPath == null)
+                if (string.IsNullOrEmpty(documentPath))
                 {
                     output = "Nothing to do, no open document";
                 }
@@ -130,7 +196,7 @@ namespace UETools.Helper
             string output;
             try
             {
-                if (documentPath == null)
+                if (string.IsNullOrEmpty(documentPath))
                 {
                     output = "Nothing to do, no open document";
                 }
@@ -156,7 +222,7 @@ namespace UETools.Helper
             string output;
             try
             {
-                if (documentPath == null)
+                if (string.IsNullOrEmpty(documentPath))
                 {
                     output = "Nothing to do, no open document";
                 }
