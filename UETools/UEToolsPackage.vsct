@@ -126,8 +126,7 @@
       <Button guid="GuidUEToolsMenu" id="P4DiffAgainstId" type="Button">
         <CommandFlag>DynamicItemStart</CommandFlag>
         <Strings>
-          <CommandName>DynamicItemStart</CommandName>
-          <CommandName>TextChanges</CommandName>
+          <ButtonText></ButtonText>
         </Strings>
       </Button>
 
@@ -148,6 +147,12 @@
         <Strings>
           <ButtonText>Use Incredibuild</ButtonText>
           <ToolTipText>Enable or Disable Incredibuild</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="GuidUEToolsMenu" id="UELaunchUEFEId" type="Button">
+        <Strings>
+          <ButtonText>Launch Unreal Frontend</ButtonText>
+          <ToolTipText>Launches Unreal Frontend</ToolTipText>
         </Strings>
       </Button>
     </Buttons>
@@ -196,6 +201,9 @@
       <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" />
     </CommandPlacement>
     <CommandPlacement guid="GuidUEToolsMenu" id="UEUseIncredibuildId" priority="0x0120">
+      <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="UELaunchUEFEId" priority="0x0120">
       <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" />
     </CommandPlacement>
     -->
@@ -301,6 +309,7 @@
       <IDSymbol name="UEUseDDCId" value="0x0300" />
       <IDSymbol name="UECleanDDCId" value="0x0310" />
       <IDSymbol name="UEUseIncredibuildId" value="0x0320" />
+      <IDSymbol name="UELaunchUEFEId" value="0x0330" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{0df9b6b4-92aa-4353-95f2-fd7084129f70}" >

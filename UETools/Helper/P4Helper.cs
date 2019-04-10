@@ -27,38 +27,55 @@ namespace UETools.Helper
     {
         public static P4FileStat GetFileStat(string filename)
         {
-            string output;
-            if (Helper.ProcessHelper.RunProcess("p4", "fstat " + Path.GetFileName(filename), Path.GetDirectoryName(filename), out output) == 0)
+            try
             {
-                try
+                string output;
+                if (filename.StartsWith("//"))
                 {
-                    //... depotFile //UE4/Release-4.22/GenerateProjectFiles.bat
-                    //... clientFile D:\stu.mckenna-4-22\GenerateProjectFiles.bat
-                    //... isMapped
-                    //... headAction branch
-                    //... headType text+x
-                    //... headTime 1548987099
-                    //... headRev 1
-                    //... headChange 4862694
-                    //... headModTime 1481225333
-                    //... haveRev 1
+                    if (Helper.ProcessHelper.RunProcess("p4", "fstat " + filename, out output) != 0)
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    if (Helper.ProcessHelper.RunProcess("p4", "fstat " + Path.GetFileName(filename), Path.GetDirectoryName(filename), out output) != 0)
+                    {
+                        return null;
+                    }
+                }
 
-                    var findDepotFile = new System.Text.RegularExpressions.Regex(@"depotFile([^\n]+)$", System.Text.RegularExpressions.RegexOptions.Multiline);
-                    var findClientFile = new System.Text.RegularExpressions.Regex(@"clientFile([^\n]+)$", System.Text.RegularExpressions.RegexOptions.Multiline);
-                    var findHeadRevision = new System.Text.RegularExpressions.Regex(@"headRev([^\n]+)$", System.Text.RegularExpressions.RegexOptions.Multiline);
-                    var findHaveRevision = new System.Text.RegularExpressions.Regex(@"haveRev([^\n]+)$", System.Text.RegularExpressions.RegexOptions.Multiline);
+                //... depotFile //UE4/Release-4.22/GenerateProjectFiles.bat
+                //... clientFile D:\stu.mckenna-4-22\GenerateProjectFiles.bat
+                //... isMapped
+                //... headAction branch
+                //... headType text+x
+                //... headTime 1548987099
+                //... headRev 1
+                //... headChange 4862694
+                //... headModTime 1481225333
+                //... haveRev 1
 
-                    P4FileStat fileStat = new P4FileStat();
-                    fileStat.DepotFile = findDepotFile.Match(output).Groups[1].ToString().TrimEnd('\r', '\n').Trim();
+                var findDepotFile = new System.Text.RegularExpressions.Regex(@"depotFile([^\n]+)$", System.Text.RegularExpressions.RegexOptions.Multiline);
+                var findClientFile = new System.Text.RegularExpressions.Regex(@"clientFile([^\n]+)$", System.Text.RegularExpressions.RegexOptions.Multiline);
+                var findHeadRevision = new System.Text.RegularExpressions.Regex(@"headRev([^\n]+)$", System.Text.RegularExpressions.RegexOptions.Multiline);
+                var findHaveRevision = new System.Text.RegularExpressions.Regex(@"haveRev([^\n]+)$", System.Text.RegularExpressions.RegexOptions.Multiline);
+
+                P4FileStat fileStat = new P4FileStat();
+                fileStat.DepotFile = findDepotFile.Match(output).Groups[1].ToString().TrimEnd('\r', '\n').Trim();
+                fileStat.HeadRevision = int.Parse(findHeadRevision.Match(output).Groups[1].ToString().TrimEnd('\r', '\n').Trim());
+
+                var clientMatch = findClientFile.Match(output);
+                if (clientMatch.Groups.Count > 1)
+                {
                     fileStat.ClientFile = findClientFile.Match(output).Groups[1].ToString().TrimEnd('\r', '\n').Trim();
-                    fileStat.HeadRevision = int.Parse(findHeadRevision.Match(output).Groups[1].ToString().TrimEnd('\r', '\n').Trim());
                     fileStat.HaveRevision = int.Parse(findHaveRevision.Match(output).Groups[1].ToString().TrimEnd('\r', '\n').Trim());
-                    return fileStat;
                 }
-                catch
-                {
-                    // Do nothing failed
-                }
+                return fileStat;
+            }
+            catch
+            {
+                // Do nothing failed
             }
 
             return null;
@@ -66,10 +83,10 @@ namespace UETools.Helper
 
         public static P4Settings GetSettings(string filename)
         {
-            string output;
-            if (Helper.ProcessHelper.RunProcess("p4", "set", Path.GetDirectoryName(filename), out output) == 0)
+            try
             {
-                try
+                string output;
+                if (Helper.ProcessHelper.RunProcess("p4", "set", Path.GetDirectoryName(filename), out output) == 0)
                 {
                     //P4CLIENT=someclient (set)
                     //P4CONFIG=P4CONFIG (set) (config 'noconfig')
@@ -88,10 +105,10 @@ namespace UETools.Helper
                     settings.User = findUser.Match(output).Groups[1].ToString().Trim();
                     return settings;
                 }
-                catch
-                {
-                    // Do nothing failed
-                }
+            }
+            catch
+            {
+                // Do nothing failed
             }
 
             return null;
@@ -163,23 +180,22 @@ namespace UETools.Helper
             Helper.VSHelper.OutputString("Result: " + output + Environment.NewLine);
         }
 
-        public static void ExecuteP4Command(string format, string documentPath)
+        public static int ExecuteCommand(string executable, string arguments, string workingDirectory)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
             string output;
+            int returnCode = 1;
             try
             {
-                if (string.IsNullOrEmpty(documentPath))
+                Helper.VSHelper.OutputString("ExecuteCommand: " + executable + " " + arguments + Environment.NewLine);
+                if (workingDirectory == null)
                 {
-                    output = "Nothing to do, no open document";
+                    returnCode = Helper.ProcessHelper.RunProcess(executable, arguments, out output);
                 }
                 else
                 {
-                    string arguments = string.Format(format, documentPath);
-                    string workingDirectory = Path.GetDirectoryName(documentPath);
-                    Helper.VSHelper.OutputString("ExecuteCommand: p4 " + arguments + Environment.NewLine);
-                    Helper.ProcessHelper.RunProcess("p4", arguments, workingDirectory, out output);
+                    returnCode = Helper.ProcessHelper.RunProcess(executable, arguments, workingDirectory, out output);
                 }
             }
             catch (Exception exception)
@@ -187,67 +203,61 @@ namespace UETools.Helper
                 output = exception.Message;
             }
             Helper.VSHelper.OutputString("Result: " + output + Environment.NewLine);
+            return returnCode;
         }
 
-        public static void ExecuteP4VCCommand(string format, string documentPath)
+        public static int ExecuteCommand(string executable, string arguments)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-
-            string output;
-            try
-            {
-                if (string.IsNullOrEmpty(documentPath))
-                {
-                    output = "Nothing to do, no open document";
-                }
-                else
-                {
-                    string arguments = string.Format(format, documentPath);
-                    string workingDirectory = Path.GetDirectoryName(documentPath);
-                    Helper.VSHelper.OutputString("ExecuteCommand: p4 " + arguments + Environment.NewLine);
-                    Helper.ProcessHelper.RunProcess("p4vc", arguments, workingDirectory, out output);
-                }
-            }
-            catch (Exception exception)
-            {
-                output = exception.Message;
-            }
-            Helper.VSHelper.OutputString("Result: " + output + Environment.NewLine);
+            return ExecuteCommand(executable, arguments, null);
         }
 
-        public static void ExecuteP4VCommand(string format, string documentPath)
+        public static int ExecuteP4Command(string format, string documentPath)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            string output;
-            try
+            if (string.IsNullOrEmpty(documentPath))
             {
-                if (string.IsNullOrEmpty(documentPath))
-                {
-                    output = "Nothing to do, no open document";
-                }
-                else
-                {
-                    P4Settings settings = GetSettings(documentPath);
-                    if (settings != null)
-                    {
-                        string workingDirectory = Path.GetDirectoryName(documentPath);
+                Helper.VSHelper.OutputString("Result: Nothing to do, no open document" + Environment.NewLine);
+                return 1;
+            }
 
-                        string arguments = string.Format("-p {0} -c {1} -u {2} -cmd \"{3}\"", settings.Port, settings.Client, settings.User, string.Format(format, documentPath));
-                        Helper.VSHelper.OutputString("ExecuteCommand: p4v " + arguments + Environment.NewLine);
-                        Helper.ProcessHelper.RunProcess("p4v", arguments, workingDirectory, out output);
-                    }
-                    else
-                    {
-                        output = "Failed to get file information";
-                    }
-                }
-            }
-            catch (Exception exception)
+            return ExecuteCommand("p4", string.Format(format, documentPath), Path.GetDirectoryName(documentPath));
+        }
+
+        public static int ExecuteP4VCCommand(string format, string documentPath)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            if (string.IsNullOrEmpty(documentPath))
             {
-                output = exception.Message;
+                Helper.VSHelper.OutputString("Result: Nothing to do, no open document" + Environment.NewLine);
+                return 1;
             }
-            Helper.VSHelper.OutputString("Result: " + output + Environment.NewLine);
+
+            return ExecuteCommand("p4vc", string.Format(format, documentPath), Path.GetDirectoryName(documentPath));
+        }
+
+        public static int ExecuteP4VCommand(string format, string documentPath)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            if (string.IsNullOrEmpty(documentPath))
+            {
+                Helper.VSHelper.OutputString("Result: Nothing to do, no open document" + Environment.NewLine);
+                return 1;
+            }
+
+            P4Settings settings = GetSettings(documentPath);
+            if (settings == null)
+            {
+                Helper.VSHelper.OutputString("Result: Failed to get file information" + Environment.NewLine);
+                return 1;
+            }
+
+            string arguments = string.Format("-p {0} -c {1} -u {2} -cmd \"{3}\"", settings.Port, settings.Client, settings.User, string.Format(format, documentPath));
+            return ExecuteCommand("p4v", arguments, Path.GetDirectoryName(documentPath));
+
         }
     }
 }

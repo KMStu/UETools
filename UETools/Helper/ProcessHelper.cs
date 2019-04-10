@@ -11,6 +11,7 @@ namespace UETools.Helper
     {
         public static int RunProcess(string filename, string arguments, string workingDirectory, out string output, int timeoutMS, CancellationToken ct)
         {
+            int returnCode = 0;
             using (var process = new System.Diagnostics.Process())
             {
                 process.StartInfo.UseShellExecute = false;
@@ -38,25 +39,35 @@ namespace UETools.Helper
                     process.BeginErrorReadLine();
 
                     DateTime timeoutTime = DateTime.Now + TimeSpan.FromMilliseconds(timeoutMS > 0 ? timeoutMS : 30000);
-                    do
+                    while ( true )
                     {
                         if ( process.WaitForExit(100) && outputWaitHandle.WaitOne(100) && errorWaitHandle.WaitOne(100) )
                         {
                             output = (process.ExitCode == 0) ? outputBuilder.ToString() : errorBuilder.ToString();
-                            return process.ExitCode;
+                            returnCode = process.ExitCode;
+                            break;
                         }
 
                         if (ct.IsCancellationRequested)
                         {
                             process.Kill();
+                            returnCode = 1;
+                            output = "Cancellation Requested";
                             ct.ThrowIfCancellationRequested();
                             break;
                         }
-                    } while (DateTime.Now < timeoutTime);
-                }
 
-                throw new ApplicationException(string.Format("Failed to run process '{0}' before we timed out", filename));
+                        if ( DateTime.Now > timeoutTime )
+                        {
+                            process.Kill();
+                            returnCode = 1;
+                            output = string.Format("Failed to run process '{0}' before we timed out", filename);
+                            break;
+                        }
+                    }
+                }
             }
+            return returnCode;
         }
 
         public static int RunProcess(string filename, string arguments, string workingDirectory, out string output)
