@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace UETools.Helper
 {
@@ -30,19 +32,42 @@ namespace UETools.Helper
             outWindow.GetPane(ref generalPaneGuid, out generalPane);
             if (generalPane == null)
             {
-                outWindow.CreatePane(generalPaneGuid, "UE Toolbar", 1, 1);
+                outWindow.CreatePane(generalPaneGuid, "UE Tools", 1, 1);
                 outWindow.GetPane(ref generalPaneGuid, out generalPane);
             }
             return generalPane;
         }
 
-        public static void OutputString(string value)
+        public static void OutputLine(string value)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
             var outWindow = GetOutputWindow();
-            outWindow?.OutputString(value);
             outWindow?.Activate();
+            outWindow?.OutputString(value + Environment.NewLine);
+        }
+
+        public static async Task OutputLineAsync(string value)
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            OutputLine(value);
+        }
+
+        public static async Task OutputLineAsync(string format, object arg0)
+        {
+            await OutputLineAsync(string.Format(format, arg0));
+        }
+        public static async Task OutputLineAsync(string format, object arg0, object arg1)
+        {
+            await OutputLineAsync(string.Format(format, arg0, arg1));
+        }
+        public static async Task OutputLineAsync(string format, object arg0, object arg1, object arg2)
+        {
+            await OutputLineAsync(string.Format(format, arg0, arg1, arg2));
+        }
+        public static async Task OutputLineAsync(string format, object arg0, object arg1, object arg2, object arg3)
+        {
+            await OutputLineAsync(string.Format(format, arg0, arg1, arg2, arg3));
         }
 
         public static string GetOpenDocumentName()
@@ -53,6 +78,42 @@ namespace UETools.Helper
             if (dte == null)
                 return null;
             return dte.ActiveDocument != null ? dte.ActiveDocument.FullName : null;
+        }
+
+        public static async Task<string> GetOpenDocumentNameAsync()
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            return GetOpenDocumentName();
+        }
+
+        public static string GetSolutionPath()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            var dte = Package.GetGlobalService(typeof(DTE)) as EnvDTE80.DTE2;
+            if (dte != null)
+            {
+                return System.IO.Path.GetDirectoryName(dte.Solution.FullName);
+            }
+            return null;
+        }
+
+        public static async Task<string> GetSolutionPathAsync()
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            return GetSolutionPath();
+        }
+
+        public static bool IsSolutionLoaded()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            var dte = Package.GetGlobalService(typeof(DTE)) as EnvDTE80.DTE2;
+            if ( dte != null )
+            {
+                return dte.Solution.IsOpen;
+            }
+            return false;
         }
 
         public static void ForEachSelectedFile(Action<string> action)

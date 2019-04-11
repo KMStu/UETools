@@ -78,14 +78,12 @@ namespace UETools.Perforce
             return remappedPath;
         }
 
-        private string ExecuteCommand(int index)
+        private async Task<string> ExecuteCommandAsync(int index)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
             string output;
             try
             {
-                string sourcePath = Helper.VSHelper.GetOpenDocumentName();
+                string sourcePath = await Helper.VSHelper.GetOpenDocumentNameAsync();
                 //Path.GetTempPath()
 
                 if (string.IsNullOrEmpty(sourcePath))
@@ -120,12 +118,12 @@ namespace UETools.Perforce
                 // Print file into temporary folder
                 //p4 print -o file1 //depot/file1#1
                 //p4merge file1 file2
-                if ( Helper.P4Helper.ExecuteCommand("p4", string.Format("print -o {0} {1}#{2}", destinationPath, destinationDepotPath, destinationRevision)) != 0 )
+                if ( await Helper.P4Helper.ExecuteCommandAsync("p4", string.Format("print -o {0} {1}#{2}", destinationPath, destinationDepotPath, destinationRevision)) != 0 )
                 {
                     return string.Format("Failed to print file");
                 }
 
-                if ( Helper.P4Helper.ExecuteCommand("p4merge", string.Format("{0} {1}", sourcePath, destinationPath)) != 0 )
+                if ( await Helper.P4Helper.ExecuteCommandAsync("p4merge", string.Format("{0} {1}", sourcePath, destinationPath)) != 0 )
                 {
                     return string.Format("Failed to execute p4merge");
                 }
@@ -147,7 +145,13 @@ namespace UETools.Perforce
             int commandIndex = matchedCommand.MatchedCommandId - matchedCommand.BaseCommandID;
             if ((commandIndex >= 0) && (commandIndex < matchedCommand.P4Paths.Count))
             {
-                Helper.VSHelper.OutputString("Result: " + matchedCommand.ExecuteCommand(commandIndex) + Environment.NewLine);
+                _ = Task.Run(
+                    async () =>
+                    {
+                        string result = await matchedCommand.ExecuteCommandAsync(commandIndex);
+                        await Helper.VSHelper.OutputLineAsync("Result: {0}", result);
+                    }
+                );
             }
         }
 

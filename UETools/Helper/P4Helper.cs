@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace UETools.Helper
 {
@@ -114,10 +115,8 @@ namespace UETools.Helper
             return null;
         }
    
-        public static void CopyP4PathToClipboard(string documentPath)
+        public static async Task CopyP4PathToClipboardAsync(string documentPath)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
             string output;
             try
             {
@@ -128,7 +127,7 @@ namespace UETools.Helper
                 else
                 {
                     P4FileStat fileStat = GetFileStat(documentPath);
-                    if ( fileStat != null )
+                    if (fileStat != null)
                     {
                         System.Windows.Forms.Clipboard.SetText(fileStat.DepotFile);
                         output = string.Format("Copied '{0}' to clipboard", fileStat.DepotFile);
@@ -143,13 +142,12 @@ namespace UETools.Helper
             {
                 output = exception.Message;
             }
-            Helper.VSHelper.OutputString("Result: " + output + Environment.NewLine);
+
+            await Helper.VSHelper.OutputLineAsync("Result: {0}", output);
         }
 
-        public static void OpenP4VAt(string documentPath)
+        public static async Task OpenP4VAtAsync(string documentPath)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
             string output;
             try
             {
@@ -164,7 +162,7 @@ namespace UETools.Helper
                     if (settings != null && fileStat != null)
                     {
                         string arguments = string.Format("-p {0} -c {1} -u {2} -s {3}", settings.Port, settings.Client, settings.User, fileStat.DepotFile);
-                        Helper.VSHelper.OutputString("ExecuteCommand: p4v " + arguments + Environment.NewLine);
+                        await Helper.VSHelper.OutputLineAsync("ExecuteCommand: p4v {0}", arguments);
                         Helper.ProcessHelper.RunProcess("p4v", arguments, Path.GetDirectoryName(documentPath), out output);
                     }
                     else
@@ -177,18 +175,16 @@ namespace UETools.Helper
             {
                 output = exception.Message;
             }
-            Helper.VSHelper.OutputString("Result: " + output + Environment.NewLine);
+            await Helper.VSHelper.OutputLineAsync("Result: {0}", output);
         }
 
-        public static int ExecuteCommand(string executable, string arguments, string workingDirectory)
+        public static async Task<int> ExecuteCommandAsync(string executable, string arguments, string workingDirectory)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
             string output;
             int returnCode = 1;
             try
             {
-                Helper.VSHelper.OutputString("ExecuteCommand: " + executable + " " + arguments + Environment.NewLine);
+                await Helper.VSHelper.OutputLineAsync("ExecuteCommand: {0} {1}", executable, arguments);
                 if (workingDirectory == null)
                 {
                     returnCode = Helper.ProcessHelper.RunProcess(executable, arguments, out output);
@@ -202,62 +198,54 @@ namespace UETools.Helper
             {
                 output = exception.Message;
             }
-            Helper.VSHelper.OutputString("Result: " + output + Environment.NewLine);
+            await Helper.VSHelper.OutputLineAsync("Result: {0}", output);
             return returnCode;
         }
 
-        public static int ExecuteCommand(string executable, string arguments)
+        public static async Task<int> ExecuteCommandAsync(string executable, string arguments)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            return ExecuteCommand(executable, arguments, null);
+            return await ExecuteCommandAsync(executable, arguments, null);
         }
 
-        public static int ExecuteP4Command(string format, string documentPath)
+        public static async Task<int> ExecuteP4CommandAsync(string format, string documentPath)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
             if (string.IsNullOrEmpty(documentPath))
             {
-                Helper.VSHelper.OutputString("Result: Nothing to do, no open document" + Environment.NewLine);
+                await Helper.VSHelper.OutputLineAsync("Result: Nothing to do, no open document");
                 return 1;
             }
 
-            return ExecuteCommand("p4", string.Format(format, documentPath), Path.GetDirectoryName(documentPath));
+            return await ExecuteCommandAsync("p4", string.Format(format, documentPath), Path.GetDirectoryName(documentPath));
         }
 
-        public static int ExecuteP4VCCommand(string format, string documentPath)
+        public static async Task<int> ExecuteP4VCCommandAsync(string format, string documentPath)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
             if (string.IsNullOrEmpty(documentPath))
             {
-                Helper.VSHelper.OutputString("Result: Nothing to do, no open document" + Environment.NewLine);
+                await Helper.VSHelper.OutputLineAsync("Result: Nothing to do, no open document");
                 return 1;
             }
 
-            return ExecuteCommand("p4vc", string.Format(format, documentPath), Path.GetDirectoryName(documentPath));
+            return await ExecuteCommandAsync("p4vc", string.Format(format, documentPath), Path.GetDirectoryName(documentPath));
         }
 
-        public static int ExecuteP4VCommand(string format, string documentPath)
+        public static async Task<int> ExecuteP4VCommandAsync(string format, string documentPath)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
             if (string.IsNullOrEmpty(documentPath))
             {
-                Helper.VSHelper.OutputString("Result: Nothing to do, no open document" + Environment.NewLine);
+                await Helper.VSHelper.OutputLineAsync("Result: Nothing to do, no open document");
                 return 1;
             }
 
             P4Settings settings = GetSettings(documentPath);
             if (settings == null)
             {
-                Helper.VSHelper.OutputString("Result: Failed to get file information" + Environment.NewLine);
+                await Helper.VSHelper.OutputLineAsync("Result: Failed to get file information");
                 return 1;
             }
 
             string arguments = string.Format("-p {0} -c {1} -u {2} -cmd \"{3}\"", settings.Port, settings.Client, settings.User, string.Format(format, documentPath));
-            return ExecuteCommand("p4v", arguments, Path.GetDirectoryName(documentPath));
-
+            return await ExecuteCommandAsync("p4v", arguments, Path.GetDirectoryName(documentPath));
         }
     }
 }

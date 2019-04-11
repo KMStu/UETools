@@ -3,7 +3,7 @@
   <Metadata>
     <Identity Id="UETools.de389ec5-cf30-4668-86e8-2871fcc23da4" Version="1.0" Language="en-US" Publisher="Stuart McKenna" />
     <DisplayName>UETools</DisplayName>
-    <Description>Empty VSIX Project.</Description>
+    <Description>Collection of helpful tools for Unreal and Perforce development.</Description>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 16.0)" />

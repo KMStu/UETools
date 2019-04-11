@@ -9,6 +9,8 @@ namespace UETools.Helper
 {
     public static class ProcessHelper
     {
+        public const int DefaultTimeoutMS = 0;
+
         public static int RunProcess(string filename, string arguments, string workingDirectory, out string output, int timeoutMS, CancellationToken ct)
         {
             int returnCode = 0;
@@ -38,7 +40,7 @@ namespace UETools.Helper
                     process.BeginOutputReadLine();
                     process.BeginErrorReadLine();
 
-                    DateTime timeoutTime = DateTime.Now + TimeSpan.FromMilliseconds(timeoutMS > 0 ? timeoutMS : 30000);
+                    DateTime timeoutTime = DateTime.Now + TimeSpan.FromMilliseconds(timeoutMS);
                     while ( true )
                     {
                         if ( process.WaitForExit(100) && outputWaitHandle.WaitOne(100) && errorWaitHandle.WaitOne(100) )
@@ -57,7 +59,7 @@ namespace UETools.Helper
                             break;
                         }
 
-                        if ( DateTime.Now > timeoutTime )
+                        if ((timeoutMS > 0 ) && (DateTime.Now > timeoutTime) )
                         {
                             process.Kill();
                             returnCode = 1;
@@ -70,31 +72,41 @@ namespace UETools.Helper
             return returnCode;
         }
 
+        public static int RunProcess(string filename, string arguments, string workingDirectory, out string output, int timeoutMS)
+        {
+            return RunProcess(filename, arguments, workingDirectory, out output, timeoutMS, new CancellationToken());
+        }
+
         public static int RunProcess(string filename, string arguments, string workingDirectory, out string output)
         {
-            return RunProcess(filename, arguments, workingDirectory, out output, 0, new CancellationToken());
+            return RunProcess(filename, arguments, workingDirectory, out output, DefaultTimeoutMS, new CancellationToken());
         }
 
         public static int RunProcess(string filename, string arguments, string workingDirectory)
         {
             string dummy;
-            return RunProcess(filename, arguments, workingDirectory, out dummy, 0, new CancellationToken());
+            return RunProcess(filename, arguments, workingDirectory, out dummy, DefaultTimeoutMS, new CancellationToken());
         }
 
         public static int RunProcess(string filename, string arguments, out string output, int timeoutMS, CancellationToken ct)
         {
-            return RunProcess(filename, arguments, null, out output, 0, new CancellationToken());
+            return RunProcess(filename, arguments, null, out output, timeoutMS, ct);
+        }
+
+        public static int RunProcess(string filename, string arguments, out string output, int timeoutMS)
+        {
+            return RunProcess(filename, arguments, null, out output, timeoutMS);
         }
 
         public static int RunProcess(string filename, string arguments, out string output)
         {
-            return RunProcess(filename, arguments, out output, 0, new CancellationToken());
+            return RunProcess(filename, arguments, out output, DefaultTimeoutMS, new CancellationToken());
         }
 
         public static int RunProcess(string filename, string arguments)
         {
             string dummy;
-            return RunProcess(filename, arguments, out dummy, 0, new CancellationToken());
+            return RunProcess(filename, arguments, out dummy, DefaultTimeoutMS, new CancellationToken());
         }
     }
 }
