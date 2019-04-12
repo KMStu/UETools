@@ -35,6 +35,7 @@ namespace UETools
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [ProvideMenuResource("Menus.ctmenu", 1)]
+    [ProvideOptionPage(typeof(Options.OptionsPage), "UE Tools Options", "General", 101, 106, true)]
     [Guid(UEToolsPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     [ProvideAutoLoad(UIContextGuids.SolutionExists)]
@@ -45,6 +46,7 @@ namespace UETools
 
         public UEToolsPackage()
         {
+            Options.Options.Instantiate(this);
         }
 
         #region Package Members

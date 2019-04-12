@@ -125,6 +125,8 @@
       <!-- P4 Diff Against Buttons -->
       <Button guid="GuidUEToolsMenu" id="P4DiffAgainstId" type="Button">
         <CommandFlag>DynamicItemStart</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
           <ButtonText></ButtonText>
         </Strings>

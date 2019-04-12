@@ -13,7 +13,6 @@ namespace UETools.Perforce
 {
     public class P4DiffAgainstCommand : OleMenuCommand
     {
-        private List<string> P4Paths;
         private int BaseCommandID;
 
         public P4DiffAgainstCommand(CommandID rootID)
@@ -21,13 +20,6 @@ namespace UETools.Perforce
         {
             BaseCommandID = rootID.ID;
             MatchedCommandId = rootID.ID;
-
-            P4Paths = new List<string>();
-            P4Paths.Add(@"//UE4/Main");
-            P4Paths.Add(@"//UE4/Dev-Destruction");
-            P4Paths.Add(@"//UE4/Dev-Niagara");
-            P4Paths.Add(@"//UE4/Dev-Rendering");
-            P4Paths.Sort();
         }
 
         public static async Task InitializeAsync(AsyncPackage package, Guid commandSet, int commandID)
@@ -44,7 +36,10 @@ namespace UETools.Perforce
         public override bool DynamicItemMatch(int commandID)
         {
             if (!IsValidDynamicItem(commandID))
+            {
+                MatchedCommandId = 0;
                 return false;
+            }
 
             MatchedCommandId = commandID;
 
@@ -53,7 +48,7 @@ namespace UETools.Perforce
 
         private bool IsValidDynamicItem(int commandID)
         {
-            return (commandID >= BaseCommandID) && (commandID < BaseCommandID + P4Paths.Count);
+            return (commandID >= BaseCommandID) && (commandID < BaseCommandID + Options.Options.P4Paths.Length);
         }
 
         private static string ChangeP4DepotPath(string originalPath, string destinationPath)
@@ -98,13 +93,14 @@ namespace UETools.Perforce
                     return string.Format("Failed to get FileStat for '{0}'", sourcePath);
                 }
 
-                if (sourceFileStat.DepotFile.StartsWith(P4Paths[index]))
-                {
-                    return string.Format("DepotFile '{0}' is already in the path '{1}'", sourceFileStat.DepotFile, P4Paths[index]);
-                }
+                // Compare with self, could warn about this?
+                //if (sourceFileStat.DepotFile.StartsWith(Options.Options.P4Paths[index]))
+                //{
+                //    return string.Format("DepotFile '{0}' is already in the path '{1}'", sourceFileStat.DepotFile, Options.Options.P4Paths[index]);
+                //}
 
                 // Remap to destination
-                string destinationDepotPath = ChangeP4DepotPath(sourceFileStat.DepotFile, P4Paths[index]);
+                string destinationDepotPath = ChangeP4DepotPath(sourceFileStat.DepotFile, Options.Options.P4Paths[index]);
                 var destinationFileStat = Helper.P4Helper.GetFileStat(destinationDepotPath);
                 if (destinationFileStat == null)
                 {
@@ -142,13 +138,16 @@ namespace UETools.Perforce
             ThreadHelper.ThrowIfNotOnUIThread();
 
             P4DiffAgainstCommand matchedCommand = (P4DiffAgainstCommand)sender;
-            int commandIndex = matchedCommand.MatchedCommandId - matchedCommand.BaseCommandID;
-            if ((commandIndex >= 0) && (commandIndex < matchedCommand.P4Paths.Count))
+
+            bool isRootItem = matchedCommand.MatchedCommandId == 0;
+            int itemIndex = isRootItem ? 0 : matchedCommand.MatchedCommandId - matchedCommand.BaseCommandID;
+
+            if ((itemIndex >= 0) && (itemIndex < Options.Options.P4Paths.Length))
             {
                 _ = Task.Run(
                     async () =>
                     {
-                        string result = await matchedCommand.ExecuteCommandAsync(commandIndex);
+                        string result = await matchedCommand.ExecuteCommandAsync(itemIndex);
                         await Helper.VSHelper.OutputLineAsync("Result: {0}", result);
                     }
                 );
@@ -163,17 +162,21 @@ namespace UETools.Perforce
         {
             P4DiffAgainstCommand matchedCommand = (P4DiffAgainstCommand)sender;
 
-            int commandIndex = matchedCommand.MatchedCommandId - matchedCommand.BaseCommandID;
-            if ((commandIndex >= 0) && (commandIndex < matchedCommand.P4Paths.Count) )
+            bool isRootItem = matchedCommand.MatchedCommandId == 0;
+            int itemIndex = isRootItem ? 0 : matchedCommand.MatchedCommandId - matchedCommand.BaseCommandID;
+
+            if ((itemIndex >= 0) && (itemIndex < Options.Options.P4Paths.Length) )
             {
                 matchedCommand.Enabled = true;
-                matchedCommand.Text = matchedCommand.P4Paths[matchedCommand.MatchedCommandId - matchedCommand.BaseCommandID];
+                matchedCommand.Text = Options.Options.P4Paths[itemIndex];
             }
             else
             {
                 matchedCommand.Enabled = false;
                 matchedCommand.Text = "No items";
             }
+
+            matchedCommand.MatchedCommandId = 0;
         }
     }
 }
