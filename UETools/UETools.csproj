@@ -80,10 +80,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="index.html" />
     <Content Include="Perforce\Resources\P4Images.png" />
     <Content Include="Perforce\Resources\P4ToolsPackage.ico" />
-    <Content Include="Resources\UETools.png" />
     <Content Include="Resources\UEToolsPackage.ico" />
     <Content Include="stylesheet.css" />
     <VSCTCompile Include="UEToolsPackage.vsct">
