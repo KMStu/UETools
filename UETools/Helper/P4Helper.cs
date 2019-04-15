@@ -104,7 +104,9 @@ namespace UETools.Helper
                     settings.Client = findClient.Match(output).Groups[1].ToString().Trim();
                     settings.Port = findPort.Match(output).Groups[1].ToString().Trim();
                     settings.User = findUser.Match(output).Groups[1].ToString().Trim();
-                    return settings;
+
+                    if (string.IsNullOrEmpty(settings.Client) || string.IsNullOrEmpty(settings.User) || string.IsNullOrEmpty(settings.Port))
+                        return null;
                 }
             }
             catch
