@@ -67,11 +67,11 @@
 
     <Buttons>
       <!-- P4 Buttons -->
-      <Button guid="GuidUEToolsMenu" id="P4EditId" type="Button">
-        <Icon guid="guidImages" id="ImageP4Edit" />
+      <Button guid="GuidUEToolsMenu" id="P4AddEditId" type="Button">
+        <Icon guid="guidImages" id="ImageP4AddEdit" />
         <Strings>
-          <ButtonText>P4 Edit</ButtonText>
-          <ToolTipText>P4 Edit the current document</ToolTipText>
+          <ButtonText>P4 Add / Edit</ButtonText>
+          <ToolTipText>P4 Add / Edit the current document</ToolTipText>
         </Strings>
       </Button>
       <Button guid="GuidUEToolsMenu" id="P4RevertId" type="Button">
@@ -170,13 +170,13 @@
     </Buttons>
 
     <Bitmaps>
-      <Bitmap guid="guidImages" href="Perforce\Resources\P4Images.png" usedList="ImageP4Edit, ImageP4Revert, ImageP4History, ImageP4Timelapse, ImageP4Diff, ImageP4RevisionGraph"/>
+      <Bitmap guid="guidImages" href="Perforce\Resources\P4Images.png" usedList="ImageP4AddEdit, ImageP4Revert, ImageP4History, ImageP4Timelapse, ImageP4Diff, ImageP4RevisionGraph"/>
     </Bitmaps>
   </Commands>
 
   <CommandPlacements>
     <!-- Main Menu -->
-    <CommandPlacement guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" >
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4AddEditId" priority="0x0100" >
       <Parent guid="GuidUEToolsMenu" id="P4CommonGroup" />
     </CommandPlacement>
     <CommandPlacement guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0110">
@@ -224,7 +224,7 @@
     -->
 
     <!-- Document Tab Context Menu -->
-    <CommandPlacement guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" >
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4AddEditId" priority="0x0100" >
       <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu" />
     </CommandPlacement>
     <CommandPlacement guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0110">
@@ -245,7 +245,7 @@
 
     <!-- Solution Item Context Menu -->
     <!--
-    <CommandPlacement guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" >
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4AddEditId" priority="0x0100" >
       <Parent guid="GuidUEToolsMenu" id="SolutionItemContextMenu" />
     </CommandPlacement>
     <CommandPlacement guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0110">
@@ -266,7 +266,7 @@
     -->
 
     <!-- Toolbar -->
-    <CommandPlacement guid="GuidUEToolsMenu" id="P4EditId" priority="0x0100" >
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4AddEditId" priority="0x0100" >
       <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
     </CommandPlacement>
     <CommandPlacement guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0110">
@@ -304,7 +304,7 @@
       <IDSymbol name="DocumentTabContextMenu" value="0x1040"/>
       <IDSymbol name="SolutionItemContextMenu" value="0x1050"/>
 
-      <IDSymbol name="P4EditId" value="0x0100" />
+      <IDSymbol name="P4AddEditId" value="0x0100" />
       <IDSymbol name="P4RevertId" value="0x0101" />
       <IDSymbol name="P4HistoryId" value="0x0102" />
       <IDSymbol name="P4TimelapseId" value="0x0103" />
@@ -313,7 +313,7 @@
       <IDSymbol name="P4CopyP4PathId" value="0x0106" />
       <IDSymbol name="P4OpenP4AtId" value="0x0107" />
 
-      <IDSymbol name="P4EditMultiId" value="0x0150" />    <!-- TODO Need to fix this! -->
+      <IDSymbol name="P4AddEditMultiId" value="0x0150" />    <!-- TODO Need to fix this! -->
       <IDSymbol name="P4RevertMultiId" value="0x0151" />
       <IDSymbol name="P4DiffMultiId" value="0x0152" />
       
@@ -329,7 +329,7 @@
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{0df9b6b4-92aa-4353-95f2-fd7084129f70}" >
-      <IDSymbol name="ImageP4Edit" value="1" />
+      <IDSymbol name="ImageP4AddEdit" value="1" />
       <IDSymbol name="ImageP4Revert" value="2" />
       <IDSymbol name="ImageP4History" value="3" />
       <IDSymbol name="ImageP4Timelapse" value="4" />

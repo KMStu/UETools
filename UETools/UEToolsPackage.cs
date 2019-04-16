@@ -64,7 +64,7 @@ namespace UETools
             var commandSetGuid = new Guid("9002F6D2-F954-4B61-A6E7-273609026867");
 
             // Perforce Commands
-            await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0100, () => Task.Run(async () => Helper.P4Helper.ExecuteP4CommandAsync("edit {0}", await Helper.VSHelper.GetOpenDocumentNameAsync())));
+            await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0100, () => Task.Run(async () => Helper.P4Helper.AddOrEditAsync(await Helper.VSHelper.GetOpenDocumentNameAsync())));
             await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0101, () => Task.Run(async () => Helper.P4Helper.ExecuteP4CommandAsync("revert {0}", await Helper.VSHelper.GetOpenDocumentNameAsync())));
             await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0102, () => Task.Run(async () => Helper.P4Helper.ExecuteP4VCommandAsync("history {0}", await Helper.VSHelper.GetOpenDocumentNameAsync())));
             await VisualStudio.CommandAction.InitializeAsync(this, commandSetGuid, 0x0103, () => Task.Run(async () => Helper.P4Helper.ExecuteP4VCommandAsync("timelapse {0}", await Helper.VSHelper.GetOpenDocumentNameAsync())));

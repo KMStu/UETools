@@ -182,6 +182,25 @@ namespace UETools.Helper
             await Helper.VSHelper.OutputLineAsync("Result: {0}", output);
         }
 
+        public static async Task AddOrEditAsync(string documentPath)
+        {
+            if (string.IsNullOrEmpty(documentPath))
+            {
+                await Helper.VSHelper.OutputLineAsync("Nothing to do, no open document");
+                return;
+            }
+
+            P4FileStat fileStat = GetFileStat(documentPath);
+            if ( fileStat == null || string.IsNullOrEmpty(fileStat.DepotFile) )
+            {
+                await Helper.P4Helper.ExecuteP4CommandAsync("add {0}", await Helper.VSHelper.GetOpenDocumentNameAsync());
+            }
+            else
+            {
+                await Helper.P4Helper.ExecuteP4CommandAsync("edit {0}", documentPath);
+            }
+        }
+
         public static async Task<int> ExecuteCommandAsync(string executable, string arguments, string workingDirectory)
         {
             string output;
