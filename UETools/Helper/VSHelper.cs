@@ -1,4 +1,5 @@
 ﻿using EnvDTE;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
@@ -132,6 +133,15 @@ namespace UETools.Helper
                     action(fullPath);
                 }
             }
+        }
+
+        public static Project HierarchyObjectToProject(IVsHierarchy HierarchyObject)
+        {
+            System.Windows.Threading.Dispatcher.CurrentDispatcher.VerifyAccess();
+
+            object ProjectObject;
+            HierarchyObject.GetProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out ProjectObject);
+            return (Project)ProjectObject;
         }
     }
 }

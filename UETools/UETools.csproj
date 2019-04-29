@@ -58,6 +58,9 @@
     <Compile Include="Helper\P4Helper.cs" />
     <Compile Include="Helper\ProcessHelper.cs" />
     <Compile Include="Helper\VSHelper.cs" />
+    <Compile Include="VisualStudio\VSDebuggerCommandLine.cs" />
+    <Compile Include="VisualStudio\VSEvents.cs" />
+    <Compile Include="VisualStudio\VSTitleRename.cs" />
     <Compile Include="Options\Options.cs" />
     <Compile Include="Perforce\P4DiffAgainstCommand.cs" />
     <Compile Include="Options\OptionsPage.cs">

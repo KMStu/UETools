@@ -63,6 +63,11 @@
       <Group guid="GuidUEToolsMenu" id="SolutionItemContextMenu" priority="0x0300">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
       </Group>
+
+      <!-- Test Group -->
+      <Group guid="GuidUEToolsMenu" id="TestMenuGroup" priority="0x0602">
+        <Parent guid="GuidUEToolsMenu" id="MainMenu" />
+      </Group>
     </Groups>
 
     <Buttons>
@@ -167,8 +172,28 @@
           <ToolTipText>Enable or Disable Incredibuild</ToolTipText>
         </Strings>
       </Button>
+
+      <Button guid="GuidUEToolsMenu" id="TestButton" type="Button">
+        <Strings>
+          <ButtonText>Test Button</ButtonText>
+          <ToolTipText>Executes Some Test Code :)</ToolTipText>
+        </Strings>
+      </Button>
     </Buttons>
 
+    <Combos>
+      <Combo guid="GuidUEToolsMenu" id="DebuggerCommandLineBox" type="DynamicCombo" idCommandList="DebuggerCommandLineBoxList" defaultWidth="200">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <CommandFlag>DefaultDisabled</CommandFlag>
+				<CommandFlag>FilterKeys</CommandFlag>
+				<CommandFlag>StretchHorizontally</CommandFlag>
+        <Strings>
+          <ButtonText>Debugger Command Line Arguments</ButtonText>
+          <CommandName>Debugger Command Line Editor</CommandName>
+        </Strings>
+      </Combo>
+    </Combos>
+  
     <Bitmaps>
       <Bitmap guid="guidImages" href="Perforce\Resources\P4Images.png" usedList="ImageP4AddEdit, ImageP4Revert, ImageP4History, ImageP4Timelapse, ImageP4Diff, ImageP4RevisionGraph"/>
     </Bitmaps>
@@ -223,6 +248,10 @@
     </CommandPlacement>
     -->
 
+    <CommandPlacement guid="GuidUEToolsMenu" id="TestButton" priority="0x0100">
+      <Parent guid="GuidUEToolsMenu" id="TestMenuGroup" />
+    </CommandPlacement>
+
     <!-- Document Tab Context Menu -->
     <CommandPlacement guid="GuidUEToolsMenu" id="P4AddEditId" priority="0x0100" >
       <Parent guid="GuidUEToolsMenu" id="DocumentTabContextMenu" />
@@ -269,19 +298,23 @@
     <CommandPlacement guid="GuidUEToolsMenu" id="P4AddEditId" priority="0x0100" >
       <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
     </CommandPlacement>
-    <CommandPlacement guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0110">
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4RevertId" priority="0x0101">
       <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
     </CommandPlacement>
-    <CommandPlacement guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0120">
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4DiffId" priority="0x0102">
       <Parent guid="GuidUEToolsMenu" id="ToolbarGroup"/>
     </CommandPlacement>
-    <CommandPlacement guid="GuidUEToolsMenu" id="P4HistoryId" priority="0x0130">
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4HistoryId" priority="0x0103">
       <Parent guid="GuidUEToolsMenu" id="ToolbarGroup" />
     </CommandPlacement>
-    <CommandPlacement guid="GuidUEToolsMenu" id="P4TimelapseId" priority="0x0140">
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4TimelapseId" priority="0x0104">
       <Parent guid="GuidUEToolsMenu" id="ToolbarGroup" />
     </CommandPlacement>
-    <CommandPlacement guid="GuidUEToolsMenu" id="P4RevisionGraphId" priority="0x0150">
+    <CommandPlacement guid="GuidUEToolsMenu" id="P4RevisionGraphId" priority="0x0105">
+      <Parent guid="GuidUEToolsMenu" id="ToolbarGroup" />
+    </CommandPlacement>
+
+    <CommandPlacement guid="GuidUEToolsMenu" id="DebuggerCommandLineBox" priority="0x0106">
       <Parent guid="GuidUEToolsMenu" id="ToolbarGroup" />
     </CommandPlacement>
 
@@ -326,6 +359,12 @@
       <IDSymbol name="UEUseDDCId" value="0x0302" />
       <IDSymbol name="UECleanDDCId" value="0x0303" />
       <IDSymbol name="UEUseIncredibuildId" value="0x0304" />
+
+      <IDSymbol name="DebuggerCommandLineBox" value="0x0400"/>
+      <IDSymbol name="DebuggerCommandLineBoxList" value="0x0401"/>
+      
+      <IDSymbol name="TestMenuGroup" value="0x1070"/>
+      <IDSymbol name="TestButton" value="0x0900" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{0df9b6b4-92aa-4353-95f2-fd7084129f70}" >
