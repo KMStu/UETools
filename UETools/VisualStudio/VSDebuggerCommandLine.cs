@@ -122,6 +122,8 @@ namespace UETools.VisualStudio
 
         void UpdateCommandLineCombo(bool bHasStartupProject)
         {
+            System.Windows.Threading.Dispatcher.CurrentDispatcher.VerifyAccess();
+
             ComboCommand.Enabled = bHasStartupProject;
             ComboCommandList.Enabled = bHasStartupProject;
 
@@ -130,11 +132,18 @@ namespace UETools.VisualStudio
 
         private string MakeConfigurationName(EnvDTE.Configuration configuration)
         {
+            System.Windows.Threading.Dispatcher.CurrentDispatcher.VerifyAccess();
+
             var platformName = string.Compare(configuration.PlatformName, "Any CPU") == 0 ? "AnyCPU" : configuration.PlatformName;
             return string.Format("{0}|{1}", configuration.ConfigurationName, platformName);
         }
 
-        private string GetCommandLine()
+        public bool IsProjectLoaded()
+        {
+            return ComboCommand.Enabled;
+        }
+
+        public string GetCommandLine()
         {
             System.Windows.Threading.Dispatcher.CurrentDispatcher.VerifyAccess();
 
@@ -180,7 +189,7 @@ namespace UETools.VisualStudio
             }
         }
 
-        private void SetCommandLine(string NewCommandLine)
+        public void SetCommandLine(string NewCommandLine)
         {
             System.Windows.Threading.Dispatcher.CurrentDispatcher.VerifyAccess();
 

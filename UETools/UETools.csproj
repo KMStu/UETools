@@ -58,6 +58,7 @@
     <Compile Include="Helper\P4Helper.cs" />
     <Compile Include="Helper\ProcessHelper.cs" />
     <Compile Include="Helper\VSHelper.cs" />
+    <Compile Include="VisualStudio\CommandSubList.cs" />
     <Compile Include="VisualStudio\VSDebuggerCommandLine.cs" />
     <Compile Include="VisualStudio\VSEvents.cs" />
     <Compile Include="VisualStudio\VSTitleRename.cs" />

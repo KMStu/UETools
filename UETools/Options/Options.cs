@@ -27,5 +27,6 @@ namespace UETools.Options
         internal static Options Instance { get { return _Instance; } }
 
         public static string[] P4Paths { get { OptionsPage page = (OptionsPage)_Instance.Package.GetDialogPage(typeof(OptionsPage)); return page.P4Paths; } }
+        public static string[] UECommandLineArgs { get { OptionsPage page = (OptionsPage)_Instance.Package.GetDialogPage(typeof(OptionsPage)); return page.UECommandLineArgs; } }
     }
 }

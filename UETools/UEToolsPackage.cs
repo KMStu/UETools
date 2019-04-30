@@ -72,9 +72,47 @@ namespace UETools
             await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0300, () => Unreal.UnrealCommands.LaunchEditor(), (sender) => sender.Enabled = Helper.VSHelper.IsSolutionLoaded());
             await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0301, () => Unreal.UnrealCommands.LaunchUnrealFrontend(), (sender) => sender.Enabled = Helper.VSHelper.IsSolutionLoaded());
             //await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x302, () => Unreal.UnrealCommands.LaunchServer(), (sender) => sender.Enabled = Helper.VSHelper.IsSolutionLoaded());
+            await VisualStudio.CommandSubList.InitializeAsync(
+                this, CommandSetGuid, 0x0351,
+                () =>
+                {
+                    string commandLine = VisualStudio.VSDebuggerCommandLine.Instance.GetCommandLine();
+                    bool bEnabled = VisualStudio.VSDebuggerCommandLine.Instance.IsProjectLoaded();
+                    return Array.ConvertAll(Options.Options.UECommandLineArgs, n => new VisualStudio.CommandDetails { Name = n, Enabled = bEnabled, Checked = commandLine.Contains("-" + n), });
+                },
+                async (d) =>
+                {
+                    string command = "-" + d.Name;
+                    string commandLine = VisualStudio.VSDebuggerCommandLine.Instance.GetCommandLine();
+                    if ( d.Checked )
+                    {
+                        await Helper.VSHelper.OutputLineAsync("Removing " + command);
+                        int index = commandLine.IndexOf(command);
+                        if ( index >= 0 )
+                        {
+                            if ((index > 0) && (commandLine[index - 1] == ' '))
+                            {
+                                commandLine = commandLine.Remove(index - 1, command.Length + 1);
+                            }
+                            else
+                            {
+                                commandLine = commandLine.Remove(index, command.Length);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        await Helper.VSHelper.OutputLineAsync("Adding " + command);
+                        if ((commandLine.Length > 0) && !commandLine.EndsWith(" "))
+                            commandLine += ' ';
+                        commandLine += command;
+                    }
+                    VisualStudio.VSDebuggerCommandLine.Instance.SetCommandLine(commandLine);
+                }
+            );
 
-            // Create debugger command line viewer
-            await VisualStudio.VSDebuggerCommandLine.InitializeAsync(this);
+        // Create debugger command line viewer
+        await VisualStudio.VSDebuggerCommandLine.InitializeAsync(this);
 
             // Test commands
             //await VisualStudio.CommandAction.InitializeAsync(
