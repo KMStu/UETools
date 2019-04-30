@@ -77,9 +77,9 @@
       </Group>
 
       <!-- Test Group -->
-      <Group guid="GuidUEToolsMenu" id="TestMenuGroup" priority="0x0602">
+      <!--<Group guid="GuidUEToolsMenu" id="TestMenuGroup" priority="0x0602">
         <Parent guid="GuidUEToolsMenu" id="MainMenu" />
-      </Group>
+      </Group>-->
     </Groups>
 
     <Buttons>
@@ -193,12 +193,12 @@
         </Strings>
       </Button>
 
-      <Button guid="GuidUEToolsMenu" id="TestButton" type="Button">
+      <!--<Button guid="GuidUEToolsMenu" id="TestButton" type="Button">
         <Strings>
           <ButtonText>Test Button</ButtonText>
           <ToolTipText>Executes Some Test Code :)</ToolTipText>
         </Strings>
-      </Button>
+      </Button>-->
     </Buttons>
 
     <Combos>
@@ -270,9 +270,9 @@
     </CommandPlacement>
     -->
 
-    <CommandPlacement guid="GuidUEToolsMenu" id="TestButton" priority="0x0100">
+    <!--<CommandPlacement guid="GuidUEToolsMenu" id="TestButton" priority="0x0100">
       <Parent guid="GuidUEToolsMenu" id="TestMenuGroup" />
-    </CommandPlacement>
+    </CommandPlacement>-->
 
     <!-- Document Tab Context Menu -->
     <CommandPlacement guid="GuidUEToolsMenu" id="P4AddEditId" priority="0x0100" >
@@ -389,8 +389,8 @@
       <IDSymbol name="DebuggerCommandLineBox" value="0x0400"/>
       <IDSymbol name="DebuggerCommandLineBoxList" value="0x0401"/>
       
-      <IDSymbol name="TestMenuGroup" value="0x1070"/>
-      <IDSymbol name="TestButton" value="0x0900" />
+      <!--<IDSymbol name="TestMenuGroup" value="0x1070"/>
+      <IDSymbol name="TestButton" value="0x0900" />-->
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{0df9b6b4-92aa-4353-95f2-fd7084129f70}" >

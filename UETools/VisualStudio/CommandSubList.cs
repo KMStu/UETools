@@ -25,6 +25,8 @@ namespace UETools.VisualStudio
         private Func<CommandDetails[]> GetCommandList;
         private Func<CommandDetails, Task> ExecuteCommand;
 
+        private CommandDetails[] CachedCommandDetails;
+
         public CommandSubList(CommandID rootID)
             : base(OnInvoked, OnChanged, OnBeforeQueryStatus, rootID)
         {
@@ -64,7 +66,7 @@ namespace UETools.VisualStudio
 
         private bool IsValidDynamicItem(int commandID)
         {
-            return (commandID >= BaseCommandID) && (commandID < BaseCommandID + GetCommandList().Length);
+            return (commandID >= BaseCommandID) && (commandID < BaseCommandID + CachedCommandDetails.Length);
         }
 
         private static void OnInvoked(object sender, EventArgs args)
@@ -78,14 +80,12 @@ namespace UETools.VisualStudio
             bool isRootItem = matchedCommand.MatchedCommandId == 0;
             int itemIndex = isRootItem ? 0 : matchedCommand.MatchedCommandId - matchedCommand.BaseCommandID;
 
-            CommandDetails[] commandDetails = matchedCommand.GetCommandList();
-
-            if ((itemIndex >= 0) && (itemIndex < commandDetails.Length))
+            if ((itemIndex >= 0) && (itemIndex < matchedCommand.CachedCommandDetails.Length))
             {
                 _ = Task.Run(
                     async () =>
                     {
-                        await matchedCommand.ExecuteCommand(commandDetails[itemIndex]);
+                        await matchedCommand.ExecuteCommand(matchedCommand.CachedCommandDetails[itemIndex]);
                     }
                 );
             }
@@ -103,13 +103,16 @@ namespace UETools.VisualStudio
             bool isRootItem = matchedCommand.MatchedCommandId == 0;
             int itemIndex = isRootItem ? 0 : matchedCommand.MatchedCommandId - matchedCommand.BaseCommandID;
 
-            CommandDetails[] commandDetails = matchedCommand.GetCommandList();
-
-            if ((itemIndex >= 0) && (itemIndex < commandDetails.Length))
+            if (itemIndex == 0)
             {
-                matchedCommand.Enabled = true & commandDetails[itemIndex].Enabled;
-                matchedCommand.Text = commandDetails[itemIndex].Name;
-                matchedCommand.Checked = commandDetails[itemIndex].Checked;
+                matchedCommand.CachedCommandDetails = matchedCommand.GetCommandList();
+            }
+
+            if ((itemIndex >= 0) && (itemIndex < matchedCommand.CachedCommandDetails.Length))
+            {
+                matchedCommand.Enabled = true & matchedCommand.CachedCommandDetails[itemIndex].Enabled;
+                matchedCommand.Text = matchedCommand.CachedCommandDetails[itemIndex].Name;
+                matchedCommand.Checked = matchedCommand.CachedCommandDetails[itemIndex].Checked;
             }
             else
             {
