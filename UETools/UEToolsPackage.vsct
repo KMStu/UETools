@@ -184,6 +184,12 @@
           <ToolTipText>Enable or Disable Incredibuild</ToolTipText>
         </Strings>
       </Button>
+      <Button guid="GuidUEToolsMenu" id="UEGenerateGUID" type="Button">
+        <Strings>
+          <ButtonText>Generate Unreal GUID</ButtonText>
+          <ToolTipText>Creates a GUID in the format (0xXXXXXXXX, ...) to the clipboard</ToolTipText>
+        </Strings>
+      </Button>
       <Button guid="GuidUEToolsMenu" id="UECommandLineArgsId" type="Button">
         <CommandFlag>DynamicItemStart</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
@@ -258,6 +264,9 @@
     <CommandPlacement guid="GuidUEToolsMenu" id="UECommandLineArgsId" priority="0x0102">
       <Parent guid="GuidUEToolsMenu" id="UECommandLineArgsGroup" />
     </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="UEGenerateGUID" priority="0x0120">
+      <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" />
+    </CommandPlacement>
     <!--
     <CommandPlacement guid="GuidUEToolsMenu" id="UECleanDDCId" priority="0x0110">
       <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" />
@@ -268,6 +277,7 @@
     <CommandPlacement guid="GuidUEToolsMenu" id="UEUseIncredibuildId" priority="0x0120">
       <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" />
     </CommandPlacement>
+   
     -->
 
     <!--<CommandPlacement guid="GuidUEToolsMenu" id="TestButton" priority="0x0100">
@@ -379,9 +389,10 @@
       <IDSymbol name="UnrealToolsMenuGroup" value="0x1060"/>
       <IDSymbol name="UELaunchEditorId" value="0x0300" />
       <IDSymbol name="UELaunchUEFEId" value="0x0301" />
-      <IDSymbol name="UEUseDDCId" value="0x0302" />
-      <IDSymbol name="UECleanDDCId" value="0x0303" />
-      <IDSymbol name="UEUseIncredibuildId" value="0x0304" />
+      <IDSymbol name="UEUseDDCId" value="0x0302" />           <!-- TODO Implement-->
+      <IDSymbol name="UECleanDDCId" value="0x0303" />         <!-- TODO Implement-->
+      <IDSymbol name="UEUseIncredibuildId" value="0x0304" />  <!-- TODO Implement-->
+      <IDSymbol name="UEGenerateGUID" value="0x0305" />
 
       <IDSymbol name="UECommandLineArgsSubMenu" value="0x0350"/>
       <IDSymbol name="UECommandLineArgsId" value="0x0351"/> <!-- Will expand into a much larger range -->

@@ -51,7 +51,6 @@ namespace UETools.VisualStudio
         public override bool DynamicItemMatch(int commandID)
         {
             Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
-            Helper.VSHelper.OutputLine("OnBeforeQueryStatus: DynamicItemMatch " + commandID.ToString());
 
             if (!IsValidDynamicItem(commandID))
             {
@@ -72,8 +71,6 @@ namespace UETools.VisualStudio
         private static void OnInvoked(object sender, EventArgs args)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-
-            Helper.VSHelper.OutputLine("OnBeforeQueryStatus: OnInvoked");
 
             CommandSubList matchedCommand = (CommandSubList)sender;
 
