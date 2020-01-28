@@ -143,5 +143,20 @@ namespace UETools.Helper
             HierarchyObject.GetProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out ProjectObject);
             return (Project)ProjectObject;
         }
+
+        public static bool MessageBoxYesNo(string title, string message)
+        {
+            System.Windows.Threading.Dispatcher.CurrentDispatcher.VerifyAccess();
+
+            int MsgResult = VsShellUtilities.ShowMessageBox(
+                ServiceProvider.GlobalProvider,
+                message,
+                title,
+                Microsoft.VisualStudio.Shell.Interop.OLEMSGICON.OLEMSGICON_QUERY,
+                Microsoft.VisualStudio.Shell.Interop.OLEMSGBUTTON.OLEMSGBUTTON_YESNO,
+                Microsoft.VisualStudio.Shell.Interop.OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST
+            );
+            return MsgResult == (int)VSConstants.MessageBoxResult.IDYES;
+        }
     }
 }

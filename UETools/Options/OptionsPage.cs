@@ -20,7 +20,12 @@ namespace UETools.Options
         [Description("List of command line arguments to easy toggle on / off")]
         public string[] UECommandLineArgs { get; set; }
 
-        internal void ValidateSettings()
+		[Category("Unreal")]
+		[DisplayName("Supported Platforms")]
+		[Description("List of support platforms, note that they may not all work for your project")]
+		public string[] UEPlatformNames { get; set; }
+
+		internal void ValidateSettings()
         {
             // P4 Paths
             if ((P4Paths == null) || (P4Paths.Length == 0))
@@ -36,10 +41,17 @@ namespace UETools.Options
             // Command line arguments
             if ((UECommandLineArgs == null) || (UECommandLineArgs.Length == 0))
             {
-                UECommandLineArgs = new string[] { @"d3ddebug", @"onethread", @"norhithread" };
+                UECommandLineArgs = new string[] { @"d3ddebug", @"onethread", @"norhithread", "execcmds=\"stat unit,stat namedevents\"", @"filehostip" };
             }
             Array.Sort(UECommandLineArgs);
-        }
+
+			// Platforms
+			if ( (UEPlatformNames == null) || (UEPlatformNames.Length == 0) )
+			{
+				UEPlatformNames = new string[] { @"Win64", @"PS4", @"XboxOne", @"Switch" };
+			}
+			Array.Sort(UEPlatformNames);
+		}
 
         public override void LoadSettingsFromStorage()
         {

@@ -33,6 +33,13 @@
           <ButtonText>Command Line Arguments</ButtonText>
         </Strings>
       </Menu>
+      <!-- UE CookOnTheFly -->
+      <Menu guid="GuidUEToolsMenu" id="UECookOnTheFlySubMenu" priority="0x0172" type="Menu">
+        <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup"/>
+        <Strings>
+          <ButtonText>Launch CookOnTheFly Server</ButtonText>
+        </Strings>
+      </Menu>
   
       <!-- Toolbar -->
       <Menu guid="GuidUEToolsMenu" id="Toolbar" type="Toolbar">
@@ -61,6 +68,9 @@
       </Group>
       <Group guid="GuidUEToolsMenu" id="UECommandLineArgsGroup" priority="0x0602">
         <Parent guid="GuidUEToolsMenu" id="UECommandLineArgsSubMenu" />
+      </Group>
+			<Group guid="GuidUEToolsMenu" id="UECookOnTheFlyGroup" priority="0x0603">
+        <Parent guid="GuidUEToolsMenu" id="UECookOnTheFlySubMenu" />
       </Group>
       
       <!-- Toolbar -->
@@ -150,11 +160,17 @@
       </Button>
 
       <!-- Unreal Buttons -->
-      <Button guid="GuidUEToolsMenu" id="UEUseDDCId" type="Button">
+      <!--<Button guid="GuidUEToolsMenu" id="UEUseDDCId" type="Button">
         <Strings>
           <ButtonText>Use DDC</ButtonText>
           <ToolTipText>Sets which DDC to use from a preset list</ToolTipText>
-        
+        </Strings>
+      </Button>-->
+			<Button guid="GuidUEToolsMenu" id="UELaunchEditorId" type="Button">
+        <CommandFlag>DefaultDisabled</CommandFlag>
+        <Strings>
+          <ButtonText>Launch Unreal Editor</ButtonText>
+          <ToolTipText>Launches Unreal Editor</ToolTipText>
         </Strings>
       </Button>
       <Button guid="GuidUEToolsMenu" id="UELaunchUEFEId" type="Button">
@@ -164,26 +180,27 @@
           <ToolTipText>Launches Unreal Frontend</ToolTipText>
         </Strings>
       </Button>
-      <Button guid="GuidUEToolsMenu" id="UELaunchEditorId" type="Button">
-        <CommandFlag>DefaultDisabled</CommandFlag>
+			<Button guid="GuidUEToolsMenu" id="UELaunchCookOnTheFlyId" type="Button">
+        <CommandFlag>DynamicItemStart</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <ButtonText>Launch Unreal Editor</ButtonText>
-          <ToolTipText>Launches Unreal Editor</ToolTipText>
+          <ButtonText></ButtonText>
         </Strings>
-      </Button>
-      <Button guid="GuidUEToolsMenu" id="UECleanDDCId" type="Button">
+			</Button>
+      <!--<Button guid="GuidUEToolsMenu" id="UECleanDDCId" type="Button">
         <CommandFlag>DefaultDisabled</CommandFlag>
         <Strings>
           <ButtonText>Clean DDC</ButtonText>
           <ToolTipText>Deletes your local DDC</ToolTipText>
         </Strings>
-      </Button>
-      <Button guid="GuidUEToolsMenu" id="UEUseIncredibuildId" type="Button">
+      </Button>-->
+      <!--<Button guid="GuidUEToolsMenu" id="UEUseIncredibuildId" type="Button">
         <Strings>
           <ButtonText>Use Incredibuild</ButtonText>
           <ToolTipText>Enable or Disable Incredibuild</ToolTipText>
         </Strings>
-      </Button>
+      </Button>-->
       <Button guid="GuidUEToolsMenu" id="UEGenerateGUID" type="Button">
         <Strings>
           <ButtonText>Generate Unreal GUID</ButtonText>
@@ -261,7 +278,10 @@
     <CommandPlacement guid="GuidUEToolsMenu" id="UELaunchUEFEId" priority="0x0101">
       <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" />
     </CommandPlacement>
-    <CommandPlacement guid="GuidUEToolsMenu" id="UECommandLineArgsId" priority="0x0102">
+		<CommandPlacement guid="GuidUEToolsMenu" id="UELaunchCookOnTheFlyId" priority="0x0102">
+			<Parent guid="GuidUEToolsMenu" id="UECookOnTheFlyGroup" />
+		</CommandPlacement>
+		<CommandPlacement guid="GuidUEToolsMenu" id="UECommandLineArgsId" priority="0x0103">
       <Parent guid="GuidUEToolsMenu" id="UECommandLineArgsGroup" />
     </CommandPlacement>
     <CommandPlacement guid="GuidUEToolsMenu" id="UEGenerateGUID" priority="0x0120">
@@ -363,6 +383,7 @@
       <IDSymbol name="P4ExtraGroup" value="0x1022" />
       <IDSymbol name="P4DiffAgainstGroup" value="0x1023" />
       <IDSymbol name="UECommandLineArgsGroup" value="0x1024" />
+			<IDSymbol name="UECookOnTheFlyGroup" value="0x1025" />
 
       <IDSymbol name="Toolbar" value="0x1030"/>
       <IDSymbol name="ToolbarGroup" value="0x1031"/>
@@ -389,14 +410,17 @@
       <IDSymbol name="UnrealToolsMenuGroup" value="0x1060"/>
       <IDSymbol name="UELaunchEditorId" value="0x0300" />
       <IDSymbol name="UELaunchUEFEId" value="0x0301" />
-      <IDSymbol name="UEUseDDCId" value="0x0302" />           <!-- TODO Implement-->
-      <IDSymbol name="UECleanDDCId" value="0x0303" />         <!-- TODO Implement-->
-      <IDSymbol name="UEUseIncredibuildId" value="0x0304" />  <!-- TODO Implement-->
+			<!-- <IDSymbol name="UEUseDDCId" value="0x0302" />-->           <!-- TODO Implement-->
+      <!-- <IDSymbol name="UECleanDDCId" value="0x0303" />-->         <!-- TODO Implement-->
+			<!-- <IDSymbol name="UEUseIncredibuildId" value="0x0304" />-->  <!-- TODO Implement-->
       <IDSymbol name="UEGenerateGUID" value="0x0305" />
 
       <IDSymbol name="UECommandLineArgsSubMenu" value="0x0350"/>
       <IDSymbol name="UECommandLineArgsId" value="0x0351"/> <!-- Will expand into a much larger range -->
 
+      <IDSymbol name="UECookOnTheFlySubMenu" value="0x0450"/>
+      <IDSymbol name="UELaunchCookOnTheFlyId" value="0x0451"/> <!-- Will expand into a much larger range -->
+			
       <IDSymbol name="DebuggerCommandLineBox" value="0x0400"/>
       <IDSymbol name="DebuggerCommandLineBoxList" value="0x0401"/>
       
