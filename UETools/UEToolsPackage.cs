@@ -25,8 +25,8 @@ namespace UETools
     [ProvideOptionPage(typeof(Options.OptionsPage), "UE Tools Options", "General", 101, 106, true)]
     [Guid(UEToolsPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    [ProvideAutoLoad(UIContextGuids.SolutionExists)]
-    [ProvideAutoLoad(UIContextGuids.NoSolution)]
+    [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(UIContextGuids.NoSolution, PackageAutoLoadFlags.BackgroundLoad)]
     public sealed class UEToolsPackage : AsyncPackage
     {
         public const string PackageGuidString = "BA13DE52-3F65-4B6C-BC96-DDAB9C99FF88";
