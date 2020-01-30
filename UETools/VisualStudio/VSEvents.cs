@@ -45,7 +45,7 @@ namespace UETools.VisualStudio
 
             Instance = new VSEvents();
 
-            Instance.SelectionManager = ServiceProvider.GlobalProvider?.GetService(typeof(SVsSolutionBuildManager)) as IVsMonitorSelection;
+            Instance.SelectionManager = ServiceProvider.GlobalProvider?.GetService(typeof(SVsShellMonitorSelection)) as IVsMonitorSelection;
             Instance.SelectionManager?.AdviseSelectionEvents(Instance, out Instance.SelectionManagerEventsHandle);
 
             Instance.SolutionManager = ServiceProvider.GlobalProvider?.GetService(typeof(SVsSolution)) as IVsSolution2;
@@ -66,15 +66,22 @@ namespace UETools.VisualStudio
             SolutionBuildManager?.UnadviseUpdateSolutionEvents(SolutionBuildManagerEventsHandle);
         }
 
+        private void DebugEventMessage(string msg)
+        {
+            //System.Diagnostics.Debug.WriteLine(msg);
+        }
+
         /////////////////////////////////////////////////////////////////////////////////
         // Implementation: IVsSelectionEvents
         int IVsSelectionEvents.OnSelectionChanged(IVsHierarchy pHierOld, uint itemidOld, IVsMultiItemSelect pMISOld, ISelectionContainer pSCOld, IVsHierarchy pHierNew, uint itemidNew, IVsMultiItemSelect pMISNew, ISelectionContainer pSCNew)
         {
+            DebugEventMessage("IVsSelectionEvents.OnSelectionChanged");
             return VSConstants.S_OK;
         }
 
         int IVsSelectionEvents.OnElementValueChanged(uint elementid, object varValueOld, object varValueNew)
         {
+            DebugEventMessage("IVsSelectionEvents.OnElementValueChanged");
             System.Windows.Threading.Dispatcher.CurrentDispatcher.VerifyAccess();
 
             // Handle startup project changes
@@ -92,6 +99,7 @@ namespace UETools.VisualStudio
 
         int IVsSelectionEvents.OnCmdUIContextChanged(uint dwCmdUICookie, int fActive)
         {
+            DebugEventMessage("IVsSelectionEvents.OnCmdUIContextChanged");
             return VSConstants.S_OK;
         }
 
@@ -99,6 +107,7 @@ namespace UETools.VisualStudio
         // Implementation: IVsSolutionEvents
         int IVsSolutionEvents.OnAfterOpenProject(IVsHierarchy pHierarchy, int fAdded)
         {
+            DebugEventMessage("IVsSolutionEvents.OnAfterOpenProject");
             if (OnSolutionOpened != null)
             {
                 OnSolutionOpened();
@@ -109,6 +118,7 @@ namespace UETools.VisualStudio
 
         int IVsSolutionEvents.OnAfterCloseSolution(object pUnkReserved)
         {
+            DebugEventMessage("IVsSolutionEvents.OnAfterCloseSolution");
             if (OnSolutionClosed != null)
             {
                 OnSolutionClosed();
@@ -119,41 +129,49 @@ namespace UETools.VisualStudio
 
         int IVsSolutionEvents.OnQueryCloseProject(IVsHierarchy pHierarchy, int fRemoving, ref int pfCancel)
         {
+            DebugEventMessage("IVsSolutionEvents.OnQueryCloseProject");
             return VSConstants.S_OK;
         }
 
         int IVsSolutionEvents.OnBeforeCloseProject(IVsHierarchy pHierarchy, int fRemoved)
         {
+            DebugEventMessage("IVsSolutionEvents.OnBeforeCloseProject");
             return VSConstants.S_OK;
         }
 
         int IVsSolutionEvents.OnAfterLoadProject(IVsHierarchy pStubHierarchy, IVsHierarchy pRealHierarchy)
         {
-                return VSConstants.S_OK;
+            DebugEventMessage("IVsSolutionEvents.OnAfterLoadProject");
+            return VSConstants.S_OK;
         }
 
         int IVsSolutionEvents.OnQueryUnloadProject(IVsHierarchy pRealHierarchy, ref int pfCancel)
         {
+            DebugEventMessage("IVsSolutionEvents.OnQueryUnloadProject");
             return VSConstants.S_OK;
         }
 
         int IVsSolutionEvents.OnBeforeUnloadProject(IVsHierarchy pRealHierarchy, IVsHierarchy pStubHierarchy)
         {
+            DebugEventMessage("IVsSolutionEvents.OnBeforeUnloadProject");
             return VSConstants.S_OK;
         }
 
         int IVsSolutionEvents.OnAfterOpenSolution(object pUnkReserved, int fNewSolution)
         {
+            DebugEventMessage("IVsSolutionEvents.OnAfterOpenSolution");
             return VSConstants.S_OK;
         }
 
         int IVsSolutionEvents.OnQueryCloseSolution(object pUnkReserved, ref int pfCancel)
         {
+            DebugEventMessage("IVsSolutionEvents.OnQueryCloseSolution");
             return VSConstants.S_OK;
         }
 
         int IVsSolutionEvents.OnBeforeCloseSolution(object pUnkReserved)
         {
+            DebugEventMessage("IVsSolutionEvents.OnBeforeCloseSolution");
             return VSConstants.S_OK;
         }
 
@@ -161,26 +179,31 @@ namespace UETools.VisualStudio
         // Implementation: IVsUpdateSolutionEvents
         int IVsUpdateSolutionEvents.UpdateSolution_Begin(ref int pfCancelUpdate)
         {
+            DebugEventMessage("IVsUpdateSolutionEvents.UpdateSolution_Begin");
             return VSConstants.S_OK;
         }
 
         int IVsUpdateSolutionEvents.UpdateSolution_Done(int fSucceeded, int fModified, int fCancelCommand)
         {
+            DebugEventMessage("IVsUpdateSolutionEvents.UpdateSolution_Done");
             return VSConstants.S_OK;
         }
 
         int IVsUpdateSolutionEvents.UpdateSolution_StartUpdate(ref int pfCancelUpdate)
         {
+            DebugEventMessage("IVsUpdateSolutionEvents.UpdateSolution_StartUpdate");
             return VSConstants.S_OK;
         }
 
         int IVsUpdateSolutionEvents.UpdateSolution_Cancel()
         {
+            DebugEventMessage("IVsUpdateSolutionEvents.UpdateSolution_Cancel");
             return VSConstants.S_OK;
         }
 
         int IVsUpdateSolutionEvents.OnActiveProjectCfgChange(IVsHierarchy pIVsHierarchy)
         {
+            DebugEventMessage("IVsUpdateSolutionEvents.OnActiveProjectCfgChange");
             return VSConstants.S_OK;
         }
     }
