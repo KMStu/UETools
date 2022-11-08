@@ -204,7 +204,7 @@
       <Button guid="GuidUEToolsMenu" id="UEGenerateGUID" type="Button">
         <Strings>
           <ButtonText>Generate Unreal GUID</ButtonText>
-          <ToolTipText>Creates a GUID in the format (0xXXXXXXXX, ...) to the clipboard</ToolTipText>
+          <ToolTipText>Creates a GUID in the format (XXXXXXXX...) to the clipboard</ToolTipText>
         </Strings>
       </Button>
       <Button guid="GuidUEToolsMenu" id="UECommandLineArgsId" type="Button">

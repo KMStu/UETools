@@ -149,14 +149,10 @@ namespace UETools.Unreal
         {
             var guid = Guid.NewGuid().ToByteArray();
             var sb = new StringBuilder();
-            sb.Append("(0x");
             for ( int i=0; i < guid.Length; ++i )
             {
-                if ((i % 4) == 0 && (i != 0))
-                    sb.Append(", 0x");
                 sb.Append(guid[i].ToString("X2"));
             }
-            sb.Append(")");
             System.Windows.Forms.Clipboard.SetText(sb.ToString());
         }
     }
