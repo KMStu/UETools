@@ -30,7 +30,7 @@ namespace UETools.Options
             // P4 Paths
             if ((P4Paths == null) || (P4Paths.Length == 0))
             {
-                P4Paths = new string[] { @"//UE4/Main", @"//UE4/Dev-Destruction", @"//UE4/Dev-Niagara", @"//UE4/Dev-Rendering" };
+                P4Paths = new string[] { @"//UE5/Main", @"//UE5/Release-5.0", @"//UE5/Release-5.1", @"//UE5/Release-5.2" };
             }
             else
             {

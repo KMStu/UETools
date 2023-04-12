@@ -54,11 +54,11 @@ namespace UETools
 
             // Perforce Commands
             await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0100, () => Task.Run(async () => Helper.P4Helper.AddOrEditAsync(await Helper.VSHelper.GetOpenDocumentNameAsync())));
-            await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0101, () => Task.Run(async () => Helper.P4Helper.ExecuteP4CommandAsync("revert {0}", await Helper.VSHelper.GetOpenDocumentNameAsync())));
-            await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0102, () => Task.Run(async () => Helper.P4Helper.ExecuteP4VCommandAsync("history {0}", await Helper.VSHelper.GetOpenDocumentNameAsync())));
-            await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0103, () => Task.Run(async () => Helper.P4Helper.ExecuteP4VCommandAsync("timelapse {0}", await Helper.VSHelper.GetOpenDocumentNameAsync())));
-            await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0104, () => Task.Run(async () => Helper.P4Helper.ExecuteP4VCommandAsync("prevdiff {0}", await Helper.VSHelper.GetOpenDocumentNameAsync())));
-            await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0105, () => Task.Run(async () => Helper.P4Helper.ExecuteP4VCCommandAsync("revisiongraph {0}", await Helper.VSHelper.GetOpenDocumentNameAsync())));
+            await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0101, () => Task.Run(async () => Helper.P4Helper.ExecuteP4CommandAsync("revert \"{0}\"", await Helper.VSHelper.GetOpenDocumentNameAsync())));
+            await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0102, () => Task.Run(async () => Helper.P4Helper.ExecuteP4VCCommandAsync("history \"{0}\"", await Helper.VSHelper.GetOpenDocumentNameAsync())));
+            await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0103, () => Task.Run(async () => Helper.P4Helper.ExecuteP4VCCommandAsync("timelapse \"{0}\"", await Helper.VSHelper.GetOpenDocumentNameAsync())));
+            await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0104, () => Task.Run(async () => Helper.P4Helper.ExecuteP4VCCommandAsync("diffhave \"{0}\"", await Helper.VSHelper.GetOpenDocumentNameAsync())));
+            await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0105, () => Task.Run(async () => Helper.P4Helper.ExecuteP4VCCommandAsync("revisiongraph \"{0}\"", await Helper.VSHelper.GetOpenDocumentNameAsync())));
             await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0106, () => Task.Run(async () => Helper.P4Helper.CopyP4PathToClipboardAsync(await Helper.VSHelper.GetOpenDocumentNameAsync())));
             await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0107, () => Task.Run(async () => Helper.P4Helper.OpenP4VAtAsync(await Helper.VSHelper.GetOpenDocumentNameAsync())));
 

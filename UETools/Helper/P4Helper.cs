@@ -249,17 +249,6 @@ namespace UETools.Helper
                 return 1;
             }
 
-            return await ExecuteCommandAsync("p4vc", string.Format(format, documentPath), Path.GetDirectoryName(documentPath));
-        }
-
-        public static async Task<int> ExecuteP4VCommandAsync(string format, string documentPath)
-        {
-            if (string.IsNullOrEmpty(documentPath))
-            {
-                await Helper.VSHelper.OutputLineAsync("Result: Nothing to do, no open document");
-                return 1;
-            }
-
             P4Settings settings = GetSettings(documentPath);
             if (settings == null)
             {
@@ -267,7 +256,7 @@ namespace UETools.Helper
                 return 1;
             }
 
-            string arguments = string.Format("-p {0} -c {1} -u {2} -cmd \"{3}\"", settings.Port, settings.Client, settings.User, string.Format(format, documentPath));
+            string arguments = string.Format("-p4vc -p {0} -c {1} -u {2} {3}", settings.Port, settings.Client, settings.User, string.Format(format, documentPath));
             return await ExecuteCommandAsync("p4v", arguments, Path.GetDirectoryName(documentPath));
         }
     }
