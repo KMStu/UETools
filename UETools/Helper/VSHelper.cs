@@ -5,9 +5,12 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Task = System.Threading.Tasks.Task;
 
 namespace UETools.Helper
@@ -115,6 +118,45 @@ namespace UETools.Helper
                 return dte.Solution.IsOpen;
             }
             return false;
+        }
+
+        private static void BuildStartupProject()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            var dte = Package.GetGlobalService(typeof(DTE)) as EnvDTE80.DTE2;
+
+            var solutionBuild = dte.Solution.SolutionBuild;
+
+            var startupProject = solutionBuild.StartupProjects as object[];
+
+            foreach (SolutionContext context in solutionBuild.ActiveConfiguration.SolutionContexts)
+            {
+                Helper.VSHelper.OutputLine($"SolutionContext: {context.ProjectName} {context.PlatformName} {context.ConfigurationName}");
+            }
+
+            //var solutionConfiguration = solutionBuild.ActiveConfiguration .Name;
+            //var solutionPlatform = solutionBuild.ActiveConfiguration.PlaformName;
+
+            //var solutionBuildString = $"{solutionConfiguration} | {solutionPlatform}";
+            //Helper.VSHelper.OutputLine($"Building Startup Project(s) for {solutionBuildString}");
+
+            //if (startupProject != null && startupProject.Length > 0)
+            //{
+            //    var projectPath = startupProject[0].ToString();
+
+            //    Helper.VSHelper.OutputLine($"Building {projectPath}");
+
+            //    // Build the project.
+            //    solutionBuild.BuildProject(solutionBuildString, projectPath, true);
+            //}
+        }
+
+        public static async Task BuildStartupProjectAsync()
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+            BuildStartupProject();
         }
 
         public static void ForEachSelectedFile(Action<string> action)

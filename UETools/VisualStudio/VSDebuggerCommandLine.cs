@@ -47,6 +47,15 @@ namespace UETools.VisualStudio
             VSEvents.Instance.OnStartupProjectChanged += (p) => Instance.UpdateCommandLineCombo(p != null);
             //VSEvents.Instance.OnStartupProjectPropertyChanged += Instance.UpdateCommandLineCombo(true);
             //VSEvents.Instance.OnStartupProjectConfigChanged += Instance.UpdateCommandLineCombo(true);
+
+            // If the solution is already loaded, set up the command line right away
+            var solService = await package?.GetServiceAsync(typeof(SVsSolution)) as IVsSolution;
+            ErrorHandler.ThrowOnFailure(solService.GetProperty((int)__VSPROPID.VSPROPID_IsSolutionOpen, out object value));
+            bool isSolOpen = (bool)value;
+            if (isSolOpen)
+            {
+                Instance.UpdateCommandLineCombo(true);
+            }
         }
 
         private OleMenuCommand ComboCommand;

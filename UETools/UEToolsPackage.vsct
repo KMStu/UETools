@@ -215,6 +215,13 @@
           <ButtonText></ButtonText>
         </Strings>
       </Button>
+      <Button guid="GuidUEToolsMenu" id="UEBuildStartupProjectId" type="Button">
+        <Icon guid="guidImages" id="ImageUEBuildStartupProject" />
+        <Strings>
+          <ButtonText>Build Startup Project</ButtonText>
+          <ToolTipText>Build only the Startup project(s)</ToolTipText>
+        </Strings>
+      </Button>
 
       <!--<Button guid="GuidUEToolsMenu" id="TestButton" type="Button">
         <Strings>
@@ -238,7 +245,7 @@
     </Combos>
   
     <Bitmaps>
-      <Bitmap guid="guidImages" href="Perforce\Resources\P4Images.png" usedList="ImageP4AddEdit, ImageP4Revert, ImageP4History, ImageP4Timelapse, ImageP4Diff, ImageP4RevisionGraph"/>
+      <Bitmap guid="guidImages" href="Resources\IconImages.png" usedList="ImageP4AddEdit, ImageP4Revert, ImageP4History, ImageP4Timelapse, ImageP4Diff, ImageP4RevisionGraph, ImageUEBuildStartupProject"/>
     </Bitmaps>
   </Commands>
 
@@ -285,6 +292,9 @@
       <Parent guid="GuidUEToolsMenu" id="UECommandLineArgsGroup" />
     </CommandPlacement>
     <CommandPlacement guid="GuidUEToolsMenu" id="UEGenerateGUID" priority="0x0120">
+      <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" />
+    </CommandPlacement>
+    <CommandPlacement guid="GuidUEToolsMenu" id="UEBuildStartupProjectId" priority="0x0121">
       <Parent guid="GuidUEToolsMenu" id="UnrealToolsMenuGroup" />
     </CommandPlacement>
     <!--
@@ -366,7 +376,11 @@
       <Parent guid="GuidUEToolsMenu" id="ToolbarGroup" />
     </CommandPlacement>
 
-    <CommandPlacement guid="GuidUEToolsMenu" id="DebuggerCommandLineBox" priority="0x0106">
+    <CommandPlacement guid="GuidUEToolsMenu" id="UEBuildStartupProjectId" priority="0x0106">
+      <Parent guid="GuidUEToolsMenu" id="ToolbarGroup" />
+    </CommandPlacement>
+    
+    <CommandPlacement guid="GuidUEToolsMenu" id="DebuggerCommandLineBox" priority="0x0107">
       <Parent guid="GuidUEToolsMenu" id="ToolbarGroup" />
     </CommandPlacement>
 
@@ -414,6 +428,7 @@
       <!-- <IDSymbol name="UECleanDDCId" value="0x0303" />-->         <!-- TODO Implement-->
 			<!-- <IDSymbol name="UEUseIncredibuildId" value="0x0304" />-->  <!-- TODO Implement-->
       <IDSymbol name="UEGenerateGUID" value="0x0305" />
+      <IDSymbol name="UEBuildStartupProjectId" value="0x306"/>
 
       <IDSymbol name="UECommandLineArgsSubMenu" value="0x0350"/>
       <IDSymbol name="UECommandLineArgsId" value="0x0351"/> <!-- Will expand into a much larger range -->
@@ -435,6 +450,7 @@
       <IDSymbol name="ImageP4Timelapse" value="4" />
       <IDSymbol name="ImageP4Diff" value="5" />
       <IDSymbol name="ImageP4RevisionGraph" value="6" />
+      <IDSymbol name="ImageUEBuildStartupProject" value="7" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>

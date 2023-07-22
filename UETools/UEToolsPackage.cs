@@ -74,6 +74,7 @@ namespace UETools
 			await Unreal.UnrealCommandLaunchCOTF.InitializeAsync(this, CommandSetGuid, 0x0451);
 			//await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x303, () => Unreal.UnrealCommands.LaunchServer(), (sender) => sender.Enabled = Helper.VSHelper.IsSolutionLoaded());
 			await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0305, () => Unreal.UnrealCommands.GenerateGUIDToClipboard());
+            await VisualStudio.CommandAction.InitializeAsync(this, CommandSetGuid, 0x0306, () => Task.Run(async () => await Helper.VSHelper.BuildStartupProjectAsync()));
             await Unreal.UnrealCommandLineArgs.InitializeAsync(this, CommandSetGuid, 0x0351);
 
             // Create debugger command line viewer / editor
